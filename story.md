@@ -10,6 +10,7 @@
 - 将决策保存为独立 md 文件
 - PROTOTYPE_DECISIONS.md  比较是否符合SPEC.md ，不符合的让我决策
 - /hallmark @PROTOTYPE_DECISIONS.md 不用生成代码，先确认视觉主题，提供参考图
+- 使用 XXX 主题，并写入 PROTOTYPE_DECISIONS.md
 - 根据原型生成 PC Web 网站; DOSE 主题见：https://www.usehallmark.com/themes/dose/#top。不确定的先跟我确认
 
 ### 技术方案设计
