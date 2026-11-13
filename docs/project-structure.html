@@ -1,0 +1,838 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>校味 · 项目结构讲解</title>
+<style>
+  :root{
+    --paper:#FBF5E9;--paper2:#FFFCF4;--paper3:#F1E7D3;--ink:#332A20;--ink2:#55483A;--muted:#8B7B67;
+    --rule:#E3D6BF;--accent:#C4552B;--accent-soft:#F6DCCB;--blue:#3F6488;--blue-soft:#DCE8F3;
+    --green:#2F6B45;--green-soft:#DCEBDF;--code-bg:#F6EEDD;
+    --shadow:5px 5px 0 rgba(51,42,32,.12);--shadow-sm:3px 3px 0 rgba(51,42,32,.10);
+    --mono:Consolas,"SF Mono","Cascadia Mono",Menlo,monospace;
+    --sans:"PingFang SC","HarmonyOS Sans SC","Microsoft YaHei",system-ui,sans-serif;
+  }
+  html[data-theme="dark"]{
+    --paper:#191613;--paper2:#211D18;--paper3:#2A251E;--ink:#F2E8D7;--ink2:#D8CAB4;--muted:#9C8E7A;
+    --rule:#3B342B;--accent:#E8763F;--accent-soft:#4A2E20;--blue:#8FB3D6;--blue-soft:#27333F;
+    --green:#7FC39A;--green-soft:#24352B;--code-bg:#241F19;
+    --shadow:5px 5px 0 rgba(0,0,0,.45);--shadow-sm:3px 3px 0 rgba(0,0,0,.35);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.75;
+    display:grid;grid-template-columns:250px minmax(0,1fr);-webkit-font-smoothing:antialiased}
+  code,pre,.mono{font-family:var(--mono)}
+  a{color:inherit;text-decoration:none}
+  .progress{position:fixed;top:0;left:0;height:3px;width:0;background:var(--accent);z-index:900}
+  .sidebar{position:sticky;top:0;height:100vh;overflow-y:auto;padding:26px 16px 22px;border-right:1px solid var(--rule);
+    background:var(--paper2);display:flex;flex-direction:column;gap:16px}
+  .brand{font-size:19px;font-weight:800;letter-spacing:.04em}
+  .brand span{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.18em;color:var(--muted);font-weight:500;margin-top:2px}
+  .brand-sub{margin:0;font-size:12px;color:var(--muted)}
+  nav#toc{display:flex;flex-direction:column;gap:2px}
+  nav#toc a{display:flex;align-items:baseline;gap:8px;padding:6px 8px;border-radius:6px;font-size:13px;color:var(--ink2);
+    border-left:2px solid transparent}
+  nav#toc a i{font-family:var(--mono);font-style:normal;font-size:10px;color:var(--muted);width:16px}
+  nav#toc a:hover{background:var(--paper3)}
+  nav#toc a.on{background:var(--accent-soft);color:var(--accent);border-left-color:var(--accent);font-weight:600}
+  nav#toc a.on i{color:var(--accent)}
+  .side-foot{margin-top:auto;display:flex;flex-direction:column;gap:8px}
+  .side-meta{font-family:var(--mono);font-size:10px;color:var(--muted);line-height:1.6}
+  .btn{appearance:none;cursor:pointer;border:1px solid var(--rule);background:var(--paper);color:var(--ink);
+    font-family:var(--sans);font-size:12px;padding:7px 10px;border-radius:6px}
+  .btn:hover{border-color:var(--accent);color:var(--accent)}
+  main{padding:0 clamp(20px,4vw,64px) 120px;max-width:1180px;min-width:0}
+  .panel,.card,.grid2,.grid2>*,.tbl-wrap{min-width:0;max-width:100%}
+  header.hero{padding:60px 0 34px;border-bottom:1px solid var(--rule)}
+  .kicker{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:11px;letter-spacing:.16em;color:var(--accent)}
+  .kicker::before{content:"";width:22px;height:2px;background:var(--accent)}
+  h1{margin:14px 0 10px;font-size:clamp(30px,3.4vw,46px);line-height:1.18}
+  h1 em{font-style:normal;color:var(--accent)}
+  .lede{margin:0;max-width:64ch;color:var(--ink2)}
+  .lede code{background:var(--code-bg);padding:1px 5px;border-radius:4px;font-size:13px}
+  .stats{margin-top:26px;display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:10px}
+  .stat{background:var(--paper2);border:1px solid var(--rule);border-radius:8px;padding:12px 14px;box-shadow:var(--shadow-sm)}
+  .stat b{display:block;font-family:var(--mono);font-size:21px;line-height:1.2}
+  .stat span{font-size:11px;color:var(--muted)}
+  section{padding:54px 0 8px;scroll-margin-top:20px}
+  h2{display:flex;align-items:center;gap:12px;margin:0 0 6px;font-size:23px;line-height:1.3}
+  h2 .num{font-family:var(--mono);font-size:12px;font-weight:700;color:var(--accent);background:var(--accent-soft);padding:3px 7px;border-radius:4px}
+  .sub{margin:0 0 20px;color:var(--muted);font-size:13px}
+  h3{margin:26px 0 10px;font-size:16px}
+  h3 .tag{font-family:var(--mono);font-size:10px;font-weight:400;color:var(--muted);margin-left:8px}
+  .panel{background:var(--paper2);border:1px solid var(--rule);border-radius:10px;padding:20px;box-shadow:var(--shadow)}
+  .panel + .panel{margin-top:14px}
+  .panel>:first-child{margin-top:0}
+  .panel>:last-child{margin-bottom:0}
+  .topo{display:flex;align-items:stretch;gap:10px;flex-wrap:wrap}
+  .pkg{flex:1 1 210px;min-width:188px;border:1px solid var(--rule);border-radius:8px;background:var(--paper);padding:14px}
+  .pkg .name{display:flex;align-items:center;justify-content:space-between;font-weight:700}
+  .pkg .name code{font-size:11.5px;color:var(--muted);font-weight:400}
+  .pkg .desc{font-size:12.5px;color:var(--ink2);margin:6px 0 8px}
+  .pkg ul{margin:0;padding-left:16px;font-size:12px;color:var(--muted)}
+  .pkg.accent{border-color:var(--accent)}
+  .pkg.accent .name{color:var(--accent)}
+  .flow-arrow{display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:66px;
+    color:var(--muted);font-family:var(--mono);font-size:9.5px;gap:2px;text-align:center}
+  .flow-arrow b{font-size:17px;color:var(--accent);font-family:var(--sans);line-height:1}
+  .shared-band{margin-top:12px;border:1px dashed var(--accent);border-radius:8px;padding:12px 16px;background:var(--accent-soft);
+    display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+  .shared-band .t{font-weight:700;color:var(--accent);font-size:13px}
+  .shared-band .files{display:flex;gap:8px;flex-wrap:wrap}
+  .shared-band .files code{background:var(--paper2);border:1px solid var(--rule);border-radius:4px;padding:1px 6px;font-size:11.5px}
+  .rules{margin:14px 0 0;padding:0;list-style:none;display:grid;gap:7px}
+  .rules li{display:flex;gap:10px;font-size:13px}
+  .rules li .mk{flex:none;font-family:var(--mono);font-size:11px;color:var(--accent)}
+  pre.tree{margin:0;padding:18px 20px;overflow-x:auto;background:var(--code-bg);border:1px solid var(--rule);
+    border-radius:8px;font-size:12.5px;line-height:1.85;color:var(--ink2)}
+  pre.tree .c{color:var(--muted)}
+  pre.tree .d{color:var(--accent);font-weight:700}
+  pre.tree .f{color:var(--blue)}
+  .chain-wrap{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:16px;align-items:start}
+  .chain{display:flex;flex-direction:column;gap:6px}
+  .node{display:grid;grid-template-columns:26px minmax(0,1fr);gap:10px;align-items:start;cursor:pointer;
+    border:1px solid var(--rule);background:var(--paper2);border-radius:8px;padding:9px 12px;text-align:left;
+    font-family:var(--sans);color:var(--ink);font-size:13px;transition:border-color .15s,box-shadow .15s,transform .15s}
+  .node:hover{border-color:var(--accent)}
+  .node.on{border-color:var(--accent);box-shadow:var(--shadow-sm);transform:translateX(2px)}
+  .node .idx{font-family:var(--mono);font-size:11px;color:var(--accent);padding-top:1px}
+  .node .nm{font-weight:600}
+  .node .pt{display:block;font-family:var(--mono);font-size:11px;color:var(--muted);word-break:break-all}
+  .detail{border:1px solid var(--accent);background:var(--paper2);border-radius:10px;padding:16px;position:sticky;top:16px;box-shadow:var(--shadow)}
+  .detail h4{margin:0 0 2px;font-size:14px}
+  .detail .path{font-family:var(--mono);font-size:11px;color:var(--accent);word-break:break-all;display:block;margin-bottom:10px}
+  .detail p{margin:0 0 10px;font-size:12.5px;color:var(--ink2)}
+  .detail .lab{font-family:var(--mono);font-size:10px;letter-spacing:.08em;color:var(--muted);display:block;margin-bottom:4px}
+  .detail ul{margin:0;padding-left:15px;font-size:12.5px;color:var(--ink2)}
+  pre.code{margin:0;padding:12px 14px;background:var(--code-bg);border:1px solid var(--rule);border-radius:6px;
+    font-size:11.5px;line-height:1.7;overflow-x:auto;color:var(--ink2)}
+  table{width:100%;border-collapse:collapse;font-size:12.8px}
+  th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--rule);vertical-align:top}
+  th{font-size:11px;letter-spacing:.06em;color:var(--muted);font-weight:600;background:var(--paper3)}
+  tbody tr:hover{background:var(--paper)}
+  td code,p code,li code{background:var(--code-bg);border-radius:3px;padding:0 4px;font-size:11.5px}
+  .tbl-wrap{overflow-x:auto;border:1px solid var(--rule);border-radius:8px}
+  .tbl-wrap table{min-width:660px}
+  .tbl-wrap th:first-child,.tbl-wrap td:first-child{padding-left:14px}
+  .pill{display:inline-block;font-family:var(--mono);font-size:10px;padding:1px 7px;border-radius:999px;border:1px solid}
+  .pill.a{color:var(--accent);border-color:var(--accent);background:var(--accent-soft)}
+  .pill.b{color:var(--blue);border-color:var(--blue);background:var(--blue-soft)}
+  .pill.g{color:var(--green);border-color:var(--green);background:var(--green-soft)}
+  .grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}
+  .card{border:1px solid var(--rule);border-radius:8px;background:var(--paper);padding:14px 16px}
+  .card h4{margin:0 0 8px;font-size:13.5px;display:flex;justify-content:space-between;align-items:center;gap:8px}
+  .card h4 code{font-size:11.5px;color:var(--muted);font-weight:400}
+  .card ul{margin:0;padding-left:16px;font-size:12.3px;color:var(--ink2)}
+  .card ul li{margin:2px 0}
+  .k{font-family:var(--mono);font-size:10px;color:var(--accent);border:1px solid var(--accent);border-radius:3px;padding:0 3px}
+  .fk{font-family:var(--mono);font-size:10px;color:var(--blue);border:1px solid var(--blue);border-radius:3px;padding:0 3px}
+  .sv-state{display:grid;gap:10px}
+  svg{max-width:100%;height:auto;display:block}
+  .legend{display:flex;gap:14px;flex-wrap:wrap;font-size:11.5px;color:var(--muted);margin-top:10px}
+  .legend i{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:5px}
+  .timeline{list-style:none;margin:0;padding:0;display:flex;gap:8px;flex-wrap:wrap}
+  .timeline li{flex:1 1 120px;border:1px solid var(--rule);border-radius:6px;padding:8px 10px;background:var(--paper);font-size:12px}
+  .timeline li b{display:block;font-size:12.5px}
+  .timeline li span{color:var(--muted);font-family:var(--mono);font-size:10.5px}
+  .timeline li.off{opacity:.5;border-style:dashed}
+  .foot{border-top:1px solid var(--rule);margin-top:40px;padding-top:16px;font-size:12px;color:var(--muted)}
+  #toTop{position:fixed;right:22px;bottom:22px;width:38px;height:38px;border-radius:50%;border:1px solid var(--rule);
+    background:var(--paper2);color:var(--ink);cursor:pointer;font-size:15px;opacity:0;pointer-events:none;transition:opacity .2s;z-index:800}
+  #toTop.show{opacity:1;pointer-events:auto}
+  @media (max-width:1020px){
+    body{grid-template-columns:1fr}
+    .sidebar{position:static;height:auto;border-right:0;border-bottom:1px solid var(--rule);padding:18px}
+    nav#toc{flex-direction:row;flex-wrap:wrap;gap:4px}
+    nav#toc a{border-left:0;border-bottom:2px solid transparent;padding:4px 7px}
+    nav#toc a.on{border-left:0;border-bottom-color:var(--accent)}
+    .chain-wrap{grid-template-columns:1fr}
+    .detail{position:static}
+    main{padding-bottom:80px}
+  }
+</style>
+</head>
+<body>
+<div class="progress" id="progress"></div>
+<aside class="sidebar">
+  <div>
+    <div class="brand">校味<span>CAMPUS EATS</span></div>
+    <p class="brand-sub">项目结构讲解图</p>
+  </div>
+  <nav id="toc">
+    <a href="#topology"><i>01</i>全局拓扑</a>
+    <a href="#tree"><i>02</i>目录地图</a>
+    <a href="#chain"><i>03</i>一次请求的链路</a>
+    <a href="#server"><i>04</i>服务端四件套</a>
+    <a href="#client"><i>05</i>前端三层</a>
+    <a href="#data"><i>06</i>数据模型</a>
+    <a href="#state"><i>07</i>订单状态机</a>
+    <a href="#matrix"><i>08</i>业务域全景</a>
+    <a href="#quality"><i>09</i>测试与门禁</a>
+  </nav>
+  <div class="side-foot">
+    <button class="btn" id="themeBtn" type="button">切换深色 / 浅色</button>
+    <div class="side-meta">单仓三包 · 5 业务域<br>9 张表 · 11 条路由 · 14 E2E</div>
+  </div>
+</aside>
+<main>
+<header class="hero">
+  <span class="kicker">PROJECT STRUCTURE</span>
+  <h1>校味：一个<em>单仓三包</em>的<br>校园外卖平台</h1>
+  <p class="lede">
+    学生端浏览店铺、搜索菜品、加购下单并跟踪订单，管理端推进订单与维护店铺菜品。
+    前端 <code>React 19</code>，后端 <code>Express 5</code>，数据落 <code>SQLite</code>，
+    前后端以 <code>shared</code> 包共享类型与业务规则，全 TypeScript。
+  </p>
+  <div class="stats">
+    <div class="stat"><b>3</b><span>npm workspaces 包</span></div>
+    <div class="stat"><b>5</b><span>服务端业务域</span></div>
+    <div class="stat"><b>9</b><span>数据库表</span></div>
+    <div class="stat"><b>11</b><span>前端路由</span></div>
+    <div class="stat"><b>75</b><span>集成 / 单元测试</span></div>
+    <div class="stat"><b>14</b><span>端到端用例</span></div>
+  </div>
+</header>
+
+<section id="topology">
+  <h2><span class="num">01</span>全局拓扑</h2>
+  <p class="sub">三包一库。依赖方向单向，<code>shared</code> 是两端唯一的共同语言。</p>
+
+  <div class="panel">
+    <div class="topo">
+      <div class="pkg accent">
+        <div class="name">client<span class="mono">:5173</span></div>
+        <div class="desc">React SPA，浏览器里的全部界面与交互</div>
+        <ul>
+          <li>react-router-dom 路由与守卫</li>
+          <li>zustand：auth / cart 两个 store</li>
+          <li>axios 单例访问 <code>/api</code></li>
+        </ul>
+      </div>
+      <div class="flow-arrow"><b>⇄</b>HTTP<br>/api</div>
+      <div class="pkg">
+        <div class="name">server<span class="mono">:3000</span></div>
+        <div class="desc">Express API，鉴权、校验、事务、SQL 全在这一侧</div>
+        <ul>
+          <li>5 个业务域，每域四件套</li>
+          <li>JWT 鉴权，不留服务端会话</li>
+          <li>better-sqlite3 同步驱动</li>
+        </ul>
+      </div>
+      <div class="flow-arrow"><b>⇄</b>SQL<br>参数化</div>
+      <div class="pkg">
+        <div class="name">SQLite<span class="mono">*.db</span></div>
+        <div class="desc">单文件数据库，WAL 模式，外键开启</div>
+        <ul>
+          <li>9 张表 + 6 个索引</li>
+          <li>金额一律 INTEGER 分</li>
+          <li>软删除，不物理删行</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="shared-band">
+      <span class="t">shared · 两端共享</span>
+      <span class="files">
+        <code>types.ts</code><code>schemas.ts</code><code>order-status.ts</code><code>error-codes.ts</code>
+      </span>
+      <span class="side-meta" style="margin-left:auto">源码直接消费，改完必须全仓 typecheck</span>
+    </div>
+
+    <ul class="rules">
+      <li><span class="mk">规则</span><span><b>依赖单向</b>：<code>client → shared ← server</code>。client 永不 import server，server 永不 import client。</span></li>
+      <li><span class="mk">规则</span><span><b>shared 只放三类内容</b>：DTO 类型、业务规则（状态机、错误码）、zod 校验 schema，不写 DB 访问与运行时业务。</span></li>
+      <li><span class="mk">规则</span><span><b>金额不分叉</b>：库、接口、内存一律 INTEGER 分，只有展示层 ÷100。</span></li>
+      <li><span class="mk">结果</span><span>任一端改字段，另一端的类型错误会在 <code>tsc</code> 阶段暴露，而不是在运行时。</span></li>
+    </ul>
+  </div>
+</section>
+
+<section id="tree">
+  <h2><span class="num">02</span>目录地图</h2>
+  <p class="sub">读代码的顺序：先看 <code>router.tsx</code> 找页面，再看 <code>app.ts</code> 找接口，最后进 <code>modules/&lt;域&gt;</code>。</p>
+
+  <pre class="tree"><span class="d">takeaway/</span>                       <span class="c">npm workspaces 根：脚本与统一门禁</span>
+├── <span class="d">client/</span>                    <span class="c">React SPA（Vite 构建，端口 5173）</span>
+│   ├── index.html               <span class="c">壳页面（字体异步注入，无阻塞外链）</span>
+│   └── src/
+│       ├── <span class="f">main.tsx</span>             <span class="c">入口：加载字体 → 挂载 RouterProvider</span>
+│       ├── <span class="f">router.tsx</span>           <span class="c">路由表 + RequireAuth / RequireAdmin 守卫</span>
+│       ├── api/                 <span class="c">5 个域客户端 + client.ts axios 单例</span>
+│       ├── pages/               <span class="c">8 个用户页面 + admin/ 3 个后台页面</span>
+│       ├── components/          <span class="c">Header / Footer / CartPanel / 守卫 / 后台布局</span>
+│       ├── stores/              <span class="c">auth（持久化）、cart（单店、不落库）</span>
+│       ├── lib/                 <span class="c">money（分↔元）、webfonts（异步字体）</span>
+│       └── styles/              <span class="c">tokens.css + site.css，唯一视觉来源</span>
+├── <span class="d">server/</span>                    <span class="c">Express API（端口 3000）</span>
+│   └── src/
+│       ├── <span class="f">index.ts</span>             <span class="c">listen（与 app 分离，便于 supertest 复用）</span>
+│       ├── <span class="f">app.ts</span>               <span class="c">中间件链 + 路由装配</span>
+│       ├── <span class="f">config.ts</span>            <span class="c">端口 / JWT / DB 路径 / 上传目录，唯一 env 出口</span>
+│       ├── <span class="f">errors.ts</span>            <span class="c">AppError + errorHandler，统一错误外壳</span>
+│       ├── middleware/          <span class="c">auth（JWT 校验）、error、rate-limit</span>
+│       ├── modules/             <span class="c">auth / shops / orders / addresses / admin</span>
+│       ├── db/                  <span class="c">connection（WAL）、migrate、schema.sql</span>
+│       └── seed/                <span class="c">seed.ts：幂等重建演示数据</span>
+├── <span class="d">shared/</span>                    <span class="c">类型与规则，源码形态被两端引用</span>
+│   └── src/                     <span class="c">types / schemas / order-status / error-codes</span>
+├── <span class="d">e2e/</span>                       <span class="c">Playwright 验收：admin.spec + user.spec + helpers</span>
+├── <span class="d">server/test/</span>               <span class="c">vitest + supertest：api / service / seed / 限流</span>
+├── <span class="d">mockup/</span>                    <span class="c">11 份 HTML 设计稿，像素实现的视觉基线</span>
+└── <span class="f">*.md</span>                       <span class="c">SPEC（需求与验收）/ ARCHITECTURE / CODEBUDDY（规范）</span></pre>
+</section>
+<section id="chain">
+  <h2><span class="num">03</span>一次请求的链路</h2>
+  <p class="sub">以「结算页点击模拟支付」为例。点击左侧任一层，查看它的职责、禁止事项与代码形态。</p>
+
+  <div class="chain-wrap">
+    <div class="chain" id="chainList">
+      <button class="node on" type="button" data-i="0"><span class="idx">01</span><span><span class="nm">页面组件</span><span class="pt">client/src/pages/CheckoutPage.tsx</span></span></button>
+      <button class="node" type="button" data-i="1"><span class="idx">02</span><span><span class="nm">域客户端</span><span class="pt">client/src/api/orders.ts</span></span></button>
+      <button class="node" type="button" data-i="2"><span class="idx">03</span><span><span class="nm">axios 单例</span><span class="pt">client/src/api/client.ts</span></span></button>
+      <button class="node" type="button" data-i="3"><span class="idx">04</span><span><span class="nm">应用装配</span><span class="pt">server/src/app.ts</span></span></button>
+      <button class="node" type="button" data-i="4"><span class="idx">05</span><span><span class="nm">路由 + 中间件</span><span class="pt">server/src/modules/orders/orders.routes.ts</span></span></button>
+      <button class="node" type="button" data-i="5"><span class="idx">06</span><span><span class="nm">控制器</span><span class="pt">server/src/modules/orders/orders.controller.ts</span></span></button>
+      <button class="node" type="button" data-i="6"><span class="idx">07</span><span><span class="nm">服务（事务边界）</span><span class="pt">server/src/modules/orders/orders.service.ts</span></span></button>
+      <button class="node" type="button" data-i="7"><span class="idx">08</span><span><span class="nm">仓储（SQL）</span><span class="pt">server/src/modules/orders/orders.repo.ts</span></span></button>
+      <button class="node" type="button" data-i="8"><span class="idx">09</span><span><span class="nm">数据库</span><span class="pt">server/src/db/connection.ts + schema.sql</span></span></button>
+    </div>
+    <div class="detail" id="detail"></div>
+  </div>
+
+  <div class="panel" style="margin-top:16px">
+    <h3 style="margin-top:0">统一约定<span class="tag">两端都靠它说话</span></h3>
+    <div class="grid2">
+      <div class="card">
+        <h4>响应壳</h4>
+        <pre class="code">{
+  "code": 0,
+  "message": "ok",
+  "data": { "id": 12, "orderNo": "20261108004217" }
+}</pre>
+        <p style="margin:8px 0 0;font-size:12px;color:var(--muted)">客户端只认 <code>code === 0</code> 为成功，其余按业务错误处理。</p>
+      </div>
+      <div class="card">
+        <h4>错误链路</h4>
+        <ul>
+          <li>service 抛 <code>new AppError(code, message, httpStatus)</code></li>
+          <li>全局 <code>errorHandler</code> 转成响应壳与 HTTP 状态码</li>
+          <li>错误码集中来自 <code>shared/error-codes.ts</code>，禁止裸数字</li>
+          <li>controller 里禁止 try/catch 吞错</li>
+        </ul>
+      </div>
+    </div>
+    <h3>中间件顺序<span class="tag">固定，不可调换</span></h3>
+    <pre class="code">helmet → cors（仅放行 5173）→ express.json({ limit: '1mb' }) → morgan → /uploads 静态 →
+路由（requireAuth / requireAdmin）→ notFoundHandler → errorHandler</pre>
+  </div>
+</section>
+
+<section id="server">
+  <h2><span class="num">04</span>服务端四件套</h2>
+  <p class="sub">每个业务域固定 4 个文件，职责不交叉。这一条决定了项目「能不能讲清楚」。</p>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr><th>层</th><th>文件</th><th>只做这些</th><th>禁止</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>路由</td><td><code>&lt;域&gt;.routes.ts</code></td><td>挂载路径、套中间件、zod 校验入参</td><td>业务逻辑、直接访问 db</td></tr>
+        <tr><td>控制器</td><td><code>&lt;域&gt;.controller.ts</code></td><td>取参、调 service、装响应壳</td><td>SQL、事务、吞异常</td></tr>
+        <tr><td>服务</td><td><code>&lt;域&gt;.service.ts</code></td><td>业务规则、<b>事务边界</b>、跨表编排</td><td>写 SQL 字符串细节</td></tr>
+        <tr><td>仓储</td><td><code>&lt;域&gt;.repo.ts</code></td><td>手写参数化 prepared SQL</td><td>业务判断、读 req / res</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="panel" style="margin-top:16px">
+    <h3 style="margin-top:0">下单事务里的分层<span class="tag">结构示意</span></h3>
+    <pre class="code">// 05 routes：只挂路径、套守卫、校验
+ordersRouter.use(requireAuth);
+ordersRouter.post("/", controller.create);
+
+// 06 controller：取参 → 调 service → 装壳
+const order = orderService.create(req.auth.uid, body);
+res.status(201).json({ code: 0, message: "ok", data: order });
+
+// 07 service：事务边界只在这里
+const created = db.transaction(() => {
+  assertDishesOnSaleAndSameShop();      // 在售 + 同店
+  const total = sumByDbPrice();          // 价格以库为准，不信前端金额
+  return { order, items };
+})();
+
+// 08 repo：一律参数化，拼接 SQL 视为违规
+db.prepare("INSERT INTO orders (order_no, user_id, shop_id, total_cents, status) VALUES (?, ?, ?, ?, 'paid')")
+  .run(orderNo, uid, shopId, totalCents);</pre>
+    <ul class="rules">
+      <li><span class="mk">要点</span><span><b>一次事务写三处</b>：orders、order_items、地址快照。任一步失败整体回滚，不留半张单。</span></li>
+      <li><span class="mk">要点</span><span><b>幂等</b>：<code>order_no</code> 唯一约束 + 冲突重试上限 3 次，前端按钮同步禁用，双击不会拆成两单。</span></li>
+      <li><span class="mk">要点</span><span><b>鉴权不查库</b>：中间件只验 JWT 签名与 role，登录端点按所用表（users / admins）签发 role。</span></li>
+    </ul>
+  </div>
+</section>
+<section id="client">
+  <h2><span class="num">05</span>前端三层</h2>
+  <p class="sub">路由决定「看到哪一页」，页面只管「拿数据、渲染」，状态只有两个 store。</p>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr><th>路由</th><th>页面文件</th><th>守卫</th><th>数据来源</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><code>/</code></td><td>HomePage</td><td><span class="pill g">公开</span></td><td><code>shopsApi.list</code> / <code>categories</code></td></tr>
+        <tr><td><code>/login</code></td><td>LoginPage</td><td><span class="pill g">公开</span></td><td><code>authApi.login / register</code>，后台用 <code>adminLogin</code></td></tr>
+        <tr><td><code>/search</code></td><td>SearchPage</td><td><span class="pill g">公开</span></td><td><code>shopsApi.search</code></td></tr>
+        <tr><td><code>/shop/:id</code></td><td>ShopPage</td><td><span class="pill g">公开</span></td><td><code>shopsApi.detail</code> + 右侧 <code>CartPanel</code></td></tr>
+        <tr><td><code>/address</code></td><td>AddressPage</td><td><span class="pill b">RequireAuth</span></td><td><code>addressesApi</code> 五个方法</td></tr>
+        <tr><td><code>/checkout</code></td><td>CheckoutPage</td><td><span class="pill b">RequireAuth</span></td><td>地址列表 + <code>cartStore</code> + <code>ordersApi.create</code></td></tr>
+        <tr><td><code>/orders</code></td><td>OrdersPage</td><td><span class="pill b">RequireAuth</span></td><td><code>ordersApi.list</code>（按 status 过滤）</td></tr>
+        <tr><td><code>/orders/:id</code></td><td>OrderDetailPage</td><td><span class="pill b">RequireAuth</span></td><td><code>ordersApi.detail / cancel</code></td></tr>
+        <tr><td><code>/admin/orders</code></td><td>AdminOrdersPage</td><td><span class="pill a">RequireAdmin</span></td><td><code>adminApi.listOrders / transition</code></td></tr>
+        <tr><td><code>/admin/shops</code></td><td>AdminShopsPage</td><td><span class="pill a">RequireAdmin</span></td><td>店铺 CRUD + 上下架</td></tr>
+        <tr><td><code>/admin/dishes</code></td><td>AdminDishesPage</td><td><span class="pill a">RequireAdmin</span></td><td>菜品 CRUD + 图片上传</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="sub" style="margin:8px 0 0">另有 <code>/admin</code> 仅做重定向到 <code>/admin/orders</code>；后台页面共 3 个，用户页面共 8 个。</p>
+
+  <div class="grid2" style="margin-top:16px">
+    <div class="card">
+      <h4>authStore <code>stores/auth.ts</code></h4>
+      <ul>
+        <li>token + 用户信息 + role</li>
+        <li>localStorage 持久化，刷新不掉登录</li>
+        <li>401 时 <code>clear()</code>，由拦截器统一处理</li>
+        <li>守卫组件只读这个 store，不发请求</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4>cartStore <code>stores/cart.ts</code></h4>
+      <ul>
+        <li><b>单店模型</b>：一个购物车只装一家店的菜</li>
+        <li>跨店加菜先确认，确认后清空再加入</li>
+        <li>只存内存，<b>不落库</b>，刷新即空（明确的设计决策）</li>
+        <li>不信任前端金额，提交只传菜品与数量</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="panel" style="margin-top:14px">
+    <h3 style="margin-top:0">组件与页面的关系<span class="tag">谁包着谁</span></h3>
+    <pre class="code">Layout（AppHeader + Outlet + AppFooter）
+ ├─ 公开页：Home / Login / Search / Shop
+ └─ RequireAuth
+      ├─ Address / Checkout / Orders / OrderDetail
+      └─ 结算与详情页共用 CartPanel（右侧常驻购物车）
+
+RequireAdmin → AdminLayout（顶部导航 + 看板容器）
+ ├─ AdminOrders（四列看板）
+ ├─ AdminShops
+ └─ AdminDishes</pre>
+    <ul class="rules">
+      <li><span class="mk">规则</span><span>组件内禁止裸 <code>axios</code> / <code>fetch</code>，一律走 <code>client/src/api/</code>。</span></li>
+      <li><span class="mk">规则</span><span>样式只允许用 <code>tokens.css</code> 变量与 <code>site.css</code> 语义 class，禁止内联颜色字号。</span></li>
+      <li><span class="mk">规则</span><span>服务端列表数据不进 store，请求期内用局部 state，避免缓存不一致。</span></li>
+    </ul>
+  </div>
+</section>
+
+<section id="data">
+  <h2><span class="num">06</span>数据模型</h2>
+  <p class="sub">三个域九张表。表之间靠外键连起来，订单侧刻意冗余快照字段，让历史订单不随改价改址而变。</p>
+
+  <div class="grid2">
+    <div class="card">
+      <h4>用户域 <span class="mono">3 张</span></h4>
+      <ul>
+        <li><code>users</code> 学生账号：username 唯一 + password_hash</li>
+        <li><code>admins</code> 管理员账号：<b>独立表</b>，与 users 完全隔离</li>
+        <li><code>addresses</code> 收货地址：<span class="fk">FK</span> user_id，is_default 全局唯一</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4>商品域 <span class="mono">3 张</span></h4>
+      <ul>
+        <li><code>shop_categories</code> 店铺分类，首页筛选用</li>
+        <li><code>shops</code> 店铺：<span class="fk">FK</span> category_id，is_active 软删除</li>
+        <li><code>dishes</code> 菜品：<span class="fk">FK</span> shop_id，dish_group 决定详情页分组</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4>交易域 <span class="mono">2 张</span></h4>
+      <ul>
+        <li><code>orders</code> 订单：<span class="fk">FK</span> user_id / shop_id，含收货信息快照与状态</li>
+        <li><code>order_items</code> 明细：逐行结构化，<b>禁止 JSON</b>，含菜名与单价快照</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4>关系连线 <span class="mono">1 : N</span></h4>
+      <ul>
+        <li>users → addresses、users → orders</li>
+        <li>shop_categories → shops → dishes</li>
+        <li>orders → order_items ← dishes（引用 dish_id）</li>
+        <li>admins 不参与业务外键，仅作权限主体</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="panel" style="margin-top:14px">
+    <h3 style="margin-top:0">四个刻意的设计<span class="tag">答辩常被追问</span></h3>
+    <ul class="rules">
+      <li><span class="mk">快照</span><span><code>orders</code> 存收货人/电话/楼栋/房间，<code>order_items</code> 存 <code>dish_name</code> 与 <code>unit_price_cents</code>。管理员改价、用户改地址，历史订单展示不变。</span></li>
+      <li><span class="mk">软删</span><span>店铺与菜品用 <code>is_active</code>，有历史订单的行永不物理删除；下架后用户端不可见，历史订单仍可打开。</span></li>
+      <li><span class="mk">金额</span><span>所有 <code>*_cents</code> 为 INTEGER，避免浮点误差；展示层由 <code>lib/money.ts</code> 统一 ÷100。</span></li>
+      <li><span class="mk">索引</span><span><code>idx_orders_user(user_id, status, created_at DESC)</code> 支撑「我的订单」按状态倒序；<code>idx_items_dish</code> 为阶段二的近 30 天销量聚合留位。</span></li>
+    </ul>
+  </div>
+</section>
+<section id="state">
+  <h2><span class="num">07</span>订单状态机</h2>
+  <p class="sub">四态一次定稿。<code>shared/src/order-status.ts</code> 是前后端唯一事实源，按钮显隐与后端推进都读它。</p>
+
+  <div class="panel">
+    <svg viewBox="0 0 720 250" role="img" aria-label="订单状态机：待接单到配送中到已完成，待接单可取消">
+      <defs>
+        <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M 0 0 L 10 5 L 0 10 z" style="fill:var(--muted)"></path>
+        </marker>
+      </defs>
+      <g style="font-family:var(--sans)">
+        <rect x="26" y="26" width="158" height="66" rx="8" style="fill:var(--accent-soft);stroke:var(--accent);stroke-width:1.6"></rect>
+        <text x="105" y="55" text-anchor="middle" font-size="14" font-weight="700" style="fill:var(--accent)">paid</text>
+        <text x="105" y="76" text-anchor="middle" font-size="12" style="fill:var(--ink2)">待接单</text>
+
+        <rect x="282" y="26" width="158" height="66" rx="8" style="fill:var(--blue-soft);stroke:var(--blue);stroke-width:1.6"></rect>
+        <text x="361" y="55" text-anchor="middle" font-size="14" font-weight="700" style="fill:var(--blue)">delivering</text>
+        <text x="361" y="76" text-anchor="middle" font-size="12" style="fill:var(--ink2)">配送中</text>
+
+        <rect x="538" y="26" width="158" height="66" rx="8" style="fill:var(--green-soft);stroke:var(--green);stroke-width:1.6"></rect>
+        <text x="617" y="55" text-anchor="middle" font-size="14" font-weight="700" style="fill:var(--green)">completed</text>
+        <text x="617" y="76" text-anchor="middle" font-size="12" style="fill:var(--ink2)">已完成</text>
+
+        <rect x="282" y="158" width="158" height="66" rx="8" style="fill:var(--paper3);stroke:var(--muted);stroke-width:1.6;stroke-dasharray:5 4"></rect>
+        <text x="361" y="187" text-anchor="middle" font-size="14" font-weight="700" style="fill:var(--muted)">cancelled</text>
+        <text x="361" y="208" text-anchor="middle" font-size="12" style="fill:var(--ink2)">已取消</text>
+
+        <line x1="186" y1="59" x2="278" y2="59" style="stroke:var(--muted);stroke-width:1.6" marker-end="url(#ar)"></line>
+        <text x="232" y="48" text-anchor="middle" font-size="11" style="fill:var(--muted)">接单</text>
+
+        <line x1="442" y1="59" x2="534" y2="59" style="stroke:var(--muted);stroke-width:1.6" marker-end="url(#ar)"></line>
+        <text x="488" y="48" text-anchor="middle" font-size="11" style="fill:var(--muted)">送达</text>
+
+        <path d="M 105 94 L 105 191 L 278 191" fill="none" style="stroke:var(--muted);stroke-width:1.6" marker-end="url(#ar)"></path>
+        <text x="118" y="150" font-size="11" style="fill:var(--muted)">用户取消，仅此一步可达</text>
+      </g>
+    </svg>
+    <div class="legend">
+      <span><i style="background:var(--accent)"></i>待接单</span>
+      <span><i style="background:var(--blue)"></i>配送中</span>
+      <span><i style="background:var(--green)"></i>已完成</span>
+      <span><i style="background:var(--muted)"></i>已取消（终态）</span>
+    </div>
+  </div>
+
+  <div class="grid2" style="margin-top:14px">
+    <div class="card">
+      <h4>合法迁移表 <code>ORDER_FLOW</code></h4>
+      <pre class="code">paid:       ["delivering", "cancelled"]
+delivering: ["completed"]
+completed:  []
+cancelled:  []</pre>
+    </div>
+    <div class="card">
+      <h4>推进入口唯一 <code>transition()</code></h4>
+      <pre class="code">UPDATE orders SET status = :to
+WHERE id = :id AND status = :from</pre>
+      <p style="margin:8px 0 0;font-size:12px;color:var(--muted)">影响行数为 0 即说明状态已被并发改变，抛 <code>3001 / 409</code>，不做覆盖写。</p>
+    </div>
+  </div>
+
+  <div class="panel" style="margin-top:14px">
+    <h3 style="margin-top:0">详情页时间线<span class="tag">五节点，未到达置灰</span></h3>
+    <ul class="timeline">
+      <li><b>下单成功</b><span>created_at</span></li>
+      <li><b>模拟支付完成</b><span>paid_at</span></li>
+      <li><b>店家接单</b><span>accepted_at</span></li>
+      <li><b>配送中</b><span>delivered_at</span></li>
+      <li class="off"><b>已送达</b><span>completed_at</span></li>
+    </ul>
+    <p class="sub" style="margin:12px 0 0">取消单的第 5 个节点替换为「已取消」，取 <code>cancelled_at</code>。节点构造同样集中在 <code>buildOrderTimeline()</code>，页面不自己算。</p>
+  </div>
+</section>
+
+<section id="matrix">
+  <h2><span class="num">08</span>业务域全景</h2>
+  <p class="sub">把「页面 → 接口 → 服务 → 表 → 测试」排在一行，就能看清每个功能的完整归属。</p>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr><th>业务域</th><th>前端</th><th>服务端模块</th><th>数据表</th><th>覆盖测试</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><b>账户</b></td>
+          <td>LoginPage + <code>authApi</code></td>
+          <td><code>modules/auth</code><br><code>/api/auth</code>、<code>/api/admin/auth</code></td>
+          <td>users、admins</td>
+          <td>auth.service、api.test</td>
+        </tr>
+        <tr>
+          <td><b>浏览与搜索</b></td>
+          <td>Home / Search / Shop + <code>shopsApi</code></td>
+          <td><code>modules/shops</code><br><code>/api/shops</code></td>
+          <td>shop_categories、shops、dishes</td>
+          <td>api.test、E2E #5-#9</td>
+        </tr>
+        <tr>
+          <td><b>购物车与下单</b></td>
+          <td>CartPanel / Checkout / Orders / OrderDetail</td>
+          <td><code>modules/orders</code><br><code>/api/orders</code></td>
+          <td>orders、order_items（读 shops / dishes）</td>
+          <td>orders.service、E2E #12</td>
+        </tr>
+        <tr>
+          <td><b>地址</b></td>
+          <td>AddressPage + <code>addressesApi</code></td>
+          <td><code>modules/addresses</code><br><code>/api/addresses</code></td>
+          <td>addresses</td>
+          <td>addresses.service、E2E #13</td>
+        </tr>
+        <tr>
+          <td><b>管理后台</b></td>
+          <td>AdminOrders / AdminShops / AdminDishes</td>
+          <td><code>modules/admin</code><br><code>/api/admin/*</code></td>
+          <td>shops、dishes、shop_categories（订单转调 orders）</td>
+          <td>api.test、E2E #1-#4</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="panel" style="margin-top:14px">
+    <h3 style="margin-top:0">域之间的依赖<span class="tag">谁读谁，谁不改谁</span></h3>
+    <pre class="code">auth      ── 写 users / admins，签发 JWT（role 由所用表决定）
+shops     ── 只读商品域，is_active 过滤；搜索同时匹配店名与菜名
+orders    ── 读 shops / dishes 校验在售与同店；写 orders / order_items（事务）
+addresses ── 读写自己的表；所有语句按 JWT 的 uid 过滤，越权返回 404
+admin     ── 维护商品域；订单相关接口物理上复用 orders 模块
+             （adminOrdersRouter），由 adminRouter 的 requireAdmin 统一守卫</pre>
+    <ul class="rules">
+      <li><span class="mk">为什么</span><span>管理端订单接口放在 orders 模块，是为了让状态机推进只有一份实现；<code>admin</code> 模块只负责「商品维护」与「上传」。</span></li>
+      <li><span class="mk">为什么</span><span>orders 只读商品表而不写，库存与销量改动全部收敛在管理端接口，避免下单链路出现隐式写操作。</span></li>
+      <li><span class="mk">为什么</span><span>每个 <code>service</code> 都按 uid 过滤查询，不靠前端传 userId，越权访问自然变成 404。</span></li>
+    </ul>
+  </div>
+</section>
+<section id="quality">
+  <h2><span class="num">09</span>测试与门禁</h2>
+  <p class="sub">三层防线：类型与规范在写代码时拦住，集成测试在接口层拦住，端到端在真实浏览器里验收。</p>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr><th>层级</th><th>位置</th><th>规模</th><th>覆盖什么</th><th>命令</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>类型 + 规范</td><td>全仓</td><td>3 个 tsconfig</td><td>跨包类型一致性、lint 规则</td><td><code>npm run typecheck</code><br><code>npm run lint</code></td></tr>
+        <tr><td>单元</td><td><code>shared/src/*.test.ts</code></td><td>2 个文件</td><td>状态机迁移表、zod schema 边界</td><td><code>npm run test</code></td></tr>
+        <tr><td>集成</td><td><code>server/test/</code></td><td>7 个文件 75 例</td><td>supertest 打接口：鉴权分层、越权、取消限制、seed 幂等、限流</td><td><code>npm run test</code></td></tr>
+        <tr><td>端到端</td><td><code>e2e/</code></td><td>2 个 spec 14 例</td><td>真实浏览器：浏览、搜索、购物车、下单、取消、后台看板推进</td><td><code>npm run test:e2e</code></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="panel" style="margin-top:14px">
+    <h3 style="margin-top:0">本地起项目<span class="tag">按顺序执行</span></h3>
+    <pre class="code">npm install          # 根目录，一次装齐三个 workspace
+npm run seed         # 幂等重建演示数据（清库后重灌）
+npm run dev          # 并发起 server:3000 + client:5173
+npm run test         # 75 例集成 / 单元
+npm run test:e2e     # 14 例端到端（自动 seed + 构建 + 预览，约 1.6 分钟）</pre>
+  </div>
+
+  <div class="grid2" style="margin-top:14px">
+    <div class="card">
+      <h4>E2E 为什么用生产构建</h4>
+      <ul>
+        <li>dev 模式每个新浏览器上下文要冷拉数百个 ESM 模块，单页约 10s</li>
+        <li>改为 <code>vite build</code> + <code>vite preview</code> 后单页不到 1s</li>
+        <li>预览服务同样代理 <code>/api</code> 与 <code>/uploads</code></li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4>验收稳定性</h4>
+      <ul>
+        <li><code>workers: 1</code>：共用一份数据库，串行避免互相污染</li>
+        <li>每次运行前 seed，用例只依赖确定性数据</li>
+        <li>trace 写系统临时目录，避开同步盘写入阻塞</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="panel" style="margin-top:14px">
+    <h3 style="margin-top:0">阶段二的接入位<span class="tag">不改既有表</span></h3>
+    <ul class="rules">
+      <li><span class="mk">评价</span><span><code>order_items</code> 已是逐行结构化明细，新增 <code>reviews</code> 表按 <code>order_id / dish_id</code> 关联即可。</span></li>
+      <li><span class="mk">推荐</span><span><code>idx_items_dish</code> 已为「近 30 天销量」聚合留位，替换 <code>monthly_sales</code> 的 seed 兜底值。</span></li>
+      <li><span class="mk">可视化</span><span>时间字段齐全（created / paid / accepted / delivered / completed / cancelled），趋势图不需要改表。</span></li>
+    </ul>
+  </div>
+</section>
+
+<div class="foot">
+  校味 · 校园外卖平台（课程设计），结构讲解页由仓库真实目录与代码生成，对应 SPEC.md / ARCHITECTURE.md / CODEBUDDY.md。
+</div>
+</main>
+<button id="toTop" type="button" title="回到顶部">↑</button>
+<script>
+(function () {
+  "use strict";
+
+  var CHAIN = [
+    {
+      t: "页面组件",
+      p: "client/src/pages/CheckoutPage.tsx",
+      what: "读 cartStore 与地址列表，用户点「模拟支付」后先禁用按钮防重，成功后跳转订单详情。",
+      no: ["不拼接口 URL，不手动加 token", "不自行计算总价，只展示后端返回值", "不写空的 catch 把业务错误吞掉"],
+      code: ["const order = await ordersApi.create({", "  addressId: address.id,", "  remark,", "  items: cartStore.getState().items", "});", "navigate('/orders/' + order.id + '?created=1');"]
+    },
+    {
+      t: "域客户端",
+      p: "client/src/api/orders.ts",
+      what: "按业务域把接口收敛成函数，返回值已解包为业务数据，页面拿到的直接是对象。",
+      no: ["不做业务判断与页面跳转", "不重复处理 401，交给单例拦截器", "不暴露 AxiosResponse 给页面"],
+      code: ["export const ordersApi = {", "  list: (status) => request<OrderSummary[]>({ method: 'GET', url: '/orders', params: { status } }),", "  create: (body) => request<Order>({ method: 'POST', url: '/orders', data: body }),", "};"]
+    },
+    {
+      t: "axios 单例",
+      p: "client/src/api/client.ts",
+      what: "baseURL 固定 /api，超时 10 秒；请求拦截注入 Bearer；响应拦截遇 401 清会话并跳登录；业务码非 0 抛错。",
+      no: ["组件内另建 axios 实例", "在页面里手动读取 localStorage 的 token", "忽略业务错误码只判断 HTTP 状态"],
+      code: ["http.interceptors.request.use((config) => {", "  const token = useAuthStore.getState().token;", "  if (token) config.headers.Authorization = 'Bearer ' + token;", "  return config;", "});"]
+    },
+    {
+      t: "应用装配",
+      p: "server/src/app.ts",
+      what: "固定中间件顺序，挂 6 组路由与 /uploads 静态服务，末尾接 404 与统一错误处理。与 listen 分离，方便 supertest 直接挂 app。",
+      no: ["在这里写业务逻辑", "调换 helmet / cors / json 的顺序", "把错误处理放到路由之前"],
+      code: ["app.use(helmet());", "app.use(cors({ origin: ['http://localhost:5173'] }));", "app.use(express.json({ limit: '1mb' }));", "app.use('/api/orders', ordersRouter);"]
+    },
+    {
+      t: "路由 + 中间件",
+      p: "server/src/modules/orders/orders.routes.ts",
+      what: "声明路径、套 requireAuth 或 requireAdmin、用 zod 校验入参；登录类接口额外挂限流。",
+      no: ["访问数据库", "写 if 判断业务规则", "在路由里组装响应体"],
+      code: ["ordersRouter.use(requireAuth);", "ordersRouter.post('/', controller.create);", "ordersRouter.get('/:id', controller.detail);", "ordersRouter.post('/:id/cancel', controller.cancel);"]
+    },
+    {
+      t: "控制器",
+      p: "server/src/modules/orders/orders.controller.ts",
+      what: "从 req.auth 取当前用户 id，调 service，把结果装进统一响应壳。参数校验已在路由完成。",
+      no: ["写 SQL 或开事务", "try/catch 后返回 200 掩盖错误", "信任前端传来的 userId"],
+      code: ["const order = orderService.create(req.auth.uid, body);", "res.status(201).json({ code: 0, message: 'ok', data: order });"]
+    },
+    {
+      t: "服务（事务边界）",
+      p: "server/src/modules/orders/orders.service.ts",
+      what: "校验菜品在售且同店，按数据库现价算总价，生成唯一订单号，事务内写 orders 与 order_items，同时固化收货信息快照。",
+      no: ["把事务写在 controller 或 repo", "信任前端传来的金额", "用 SELECT 后再 UPDATE 来推进状态"],
+      code: ["const order = db.transaction(() => {", "  assertOnSaleAndSameShop(items);", "  const total = sumByDbPrice(items);", "  return createOrderWithItems(uid, shopId, total, snapshot);", "})();"]
+    },
+    {
+      t: "仓储（SQL）",
+      p: "server/src/modules/orders/orders.repo.ts",
+      what: "手写 prepared statement，全部参数化，只负责把行数据查出来或写进去。",
+      no: ["字符串拼接 SQL", "做业务判断或读 req/res", "在 repo 里开启事务"],
+      code: ["db.prepare('INSERT INTO orders (order_no, user_id, shop_id, total_cents) VALUES (?, ?, ?, ?)')", "  .run(orderNo, uid, shopId, totalCents);"]
+    },
+    {
+      t: "数据库",
+      p: "server/src/db/connection.ts + schema.sql",
+      what: "单文件 SQLite，WAL 模式与外键开启；schema.sql 是唯一建表入口，改表就改它再幂等重建。",
+      no: ["手写零散 ALTER 改表", "用 REAL 存金额", "物理删除被订单引用的行"],
+      code: ["db.pragma('journal_mode = WAL');", "db.pragma('foreign_keys = ON');", "-- 金额一律 INTEGER 分，状态用 CHECK 约束"]
+    }
+  ];
+
+  var detail = document.getElementById("detail");
+  var nodes = Array.prototype.slice.call(document.querySelectorAll(".node"));
+
+  function esc(s) {
+    return String(s).replace(/[&<>]/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c];
+    });
+  }
+
+  function render(i) {
+    var d = CHAIN[i];
+    if (!d || !detail) return;
+    var no = d.no.map(function (x) { return "<li>" + esc(x) + "</li>"; }).join("");
+    detail.innerHTML =
+      "<h4>" + esc(d.t) + "</h4>" +
+      '<span class="path">' + esc(d.p) + "</span>" +
+      "<p>" + esc(d.what) + "</p>" +
+      '<span class="lab">不能做</span><ul>' + no + "</ul>" +
+      '<span class="lab" style="margin-top:12px">代码形态</span>' +
+      '<pre class="code">' + esc(d.code.join("\n")) + "</pre>";
+  }
+
+  nodes.forEach(function (node) {
+    node.addEventListener("click", function () {
+      nodes.forEach(function (n) { n.classList.remove("on"); });
+      node.classList.add("on");
+      render(Number(node.getAttribute("data-i")));
+    });
+  });
+  render(0);
+
+  // 目录高亮
+  var links = Array.prototype.slice.call(document.querySelectorAll("#toc a"));
+  var sections = links.map(function (a) { return document.querySelector(a.getAttribute("href")); });
+  if ("IntersectionObserver" in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        var id = "#" + e.target.id;
+        links.forEach(function (a) { a.classList.toggle("on", a.getAttribute("href") === id); });
+      });
+    }, { rootMargin: "-15% 0px -72% 0px", threshold: 0 });
+    sections.forEach(function (s) { if (s) io.observe(s); });
+  }
+
+  // 进度条与回到顶部
+  var bar = document.getElementById("progress");
+  var top = document.getElementById("toTop");
+  function onScroll() {
+    var h = document.documentElement.scrollHeight - window.innerHeight;
+    var p = h > 0 ? (window.scrollY / h) * 100 : 0;
+    if (bar) bar.style.width = p + "%";
+    if (top) top.classList.toggle("show", window.scrollY > 600);
+  }
+  window.addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
+  if (top) top.addEventListener("click", function () { window.scrollTo({ top: 0, behavior: "smooth" }); });
+
+  // 主题切换
+  var btn = document.getElementById("themeBtn");
+  var root = document.documentElement;
+  try {
+    var saved = localStorage.getItem("xw-theme");
+    if (saved === "dark" || saved === "light") root.setAttribute("data-theme", saved);
+  } catch (err) { /* 隐私模式下 localStorage 不可用，忽略 */ }
+  if (btn) {
+    btn.addEventListener("click", function () {
+      var next = root.getAttribute("data-theme") === "dark" ? "light" : "dark";
+      root.setAttribute("data-theme", next);
+      try { localStorage.setItem("xw-theme", next); } catch (err) { /* 同上 */ }
+    });
+  }
+})();
+</script>
+</body>
+</html>

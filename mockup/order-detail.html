@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>订单 #1001 · 校味</title>
+<meta name="description" content="校味订单详情页视觉稿：菜品明细、金额与从下单到送达的状态时间线。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=ZCOOL+QingKe+HuangYou&family=Noto+Sans+SC:wght@400;500;700&family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./css/site.css">
+</head>
+<body>
+<header class="site-head">
+  <div class="container site-head-in">
+    <a class="brand" href="./index.html"><span class="brand-name">校味</span><span class="brand-pix">CAMPUS EATS</span></a>
+    <form class="search" action="./search.html"><input type="search" placeholder="搜索店名或菜名"><button type="submit">搜索</button></form>
+    <nav class="head-nav">
+      <a href="./index.html">首页</a>
+      <a href="./orders.html" aria-current="page">我的订单</a>
+      <a href="./address.html">地址管理</a>
+      <a href="./login.html">退出</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+  <div class="detail-grid">
+    <div style="display: grid; gap: var(--space-lg);">
+      <p style="font-size: var(--text-sm);"><a href="./orders.html" style="color: var(--color-accent); text-decoration: none;">&lt; 返回我的订单</a></p>
+
+      <section class="panel">
+        <h2 class="panel-head" style="display:flex; justify-content: space-between; align-items: center;">订单 #1001 <span class="stamp stamp-paid">待接单</span></h2>
+        <div class="panel-body">
+          <div class="summary-line"><span>招牌杨枝甘露 x1</span><span class="price"><span class="yen">¥</span>16</span></div>
+          <div class="summary-line"><span>珍珠奶茶 x2</span><span class="price"><span class="yen">¥</span>24</span></div>
+          <div class="summary-line"><span>配送费</span><span class="price"><span class="yen">¥</span>1</span></div>
+          <div class="summary-line summary-total"><span>合计</span><span class="price price-big"><span class="yen">¥</span>41</span></div>
+          <div class="summary-line" style="color: var(--color-muted);"><span>店铺</span><span>茶百道</span></div>
+          <div class="summary-line" style="color: var(--color-muted);"><span>收货地址</span><span>张三 138****1234 · 1 号宿舍楼 302</span></div>
+          <div class="summary-line" style="color: var(--color-muted);"><span>备注</span><span>珍珠换椰果</span></div>
+        </div>
+      </section>
+    </div>
+
+    <aside class="panel" aria-label="订单进度">
+      <h2 class="panel-head">出票进度</h2>
+      <div class="panel-body">
+        <ul class="timeline">
+          <li class="on"><span class="t-dot"></span><div><div class="t-title">下单成功</div><div class="t-time">2026-11-08 12:03:21</div></div></li>
+          <li class="on"><span class="t-dot"></span><div><div class="t-title">模拟支付完成</div><div class="t-time">2026-11-08 12:03:22</div></div></li>
+          <li class="dim"><span class="t-dot"></span><div><div class="t-title">店家接单</div><div class="t-time">等待中</div></div></li>
+          <li class="dim"><span class="t-dot"></span><div><div class="t-title">配送中</div><div class="t-time">未开始</div></div></li>
+          <li class="dim"><span class="t-dot"></span><div><div class="t-title">已送达 · 完成评价（阶段二开放）</div><div class="t-time">未开始</div></div></li>
+        </ul>
+        <button class="btn btn-danger btn-sm" style="margin-top: var(--space-md);">取消订单</button>
+      </div>
+    </aside>
+  </div>
+</main>
+
+<footer class="site-foot">
+  <div class="container site-foot-in">
+    <div>
+      <span class="brand-name">校味</span> <span class="brand-pix">CAMPUS EATS</span>
+      <small>全栈课程设计作品 · 视觉稿 v1</small>
+    </div>
+    <small style="margin-top:0;">主题：像素×温馨</small>
+  </div>
+</footer>
+</body>
+</html>

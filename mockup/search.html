@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>搜索「麻辣烫」 · 校味</title>
+<meta name="description" content="校味搜索结果页视觉稿：关键字同时命中店名与菜名，菜名结果标注所属店铺，含空状态示意。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=ZCOOL+QingKe+HuangYou&family=Noto+Sans+SC:wght@400;500;700&family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./css/site.css">
+</head>
+<body>
+<header class="site-head">
+  <div class="container site-head-in">
+    <a class="brand" href="./index.html"><span class="brand-name">校味</span><span class="brand-pix">CAMPUS EATS</span></a>
+    <form class="search" action="./search.html"><input type="search" value="麻辣烫" aria-label="搜索关键字"><button type="submit">搜索</button></form>
+    <nav class="head-nav">
+      <a href="./index.html">首页</a>
+      <a href="./orders.html">我的订单</a>
+      <a href="./address.html">地址管理</a>
+      <a class="cart-link" href="./shop.html">(cart) 购物车 3</a>
+      <a href="./login.html">退出</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container" style="padding-block: var(--space-xl);">
+  <h1 style="font-family: var(--font-display); font-size: var(--text-2xl); margin-bottom: var(--space-sm);">「麻辣烫」的搜索结果</h1>
+  <p style="color: var(--color-muted); font-size: var(--text-sm); margin-bottom: var(--space-xl);">找到 1 家店铺、3 个菜品。命中菜名的会标出所属店铺。</p>
+
+  <div class="shop-list" style="max-width: 860px;">
+    <a class="shop-row" href="./shop.html">
+      <div class="logo-slot" data-slot style="width:96px;height:72px;"><span class="slot-label">店 logo</span></div>
+      <div>
+        <div class="shop-name">麻辣香锅小灶 <span class="stamp stamp-paid" style="margin-left: 8px;">店铺</span></div>
+        <div class="shop-meta"><span>月售 999</span><span>¥15 起送</span><span>4.8 分</span></div>
+      </div>
+      <span class="go">&gt;</span>
+    </a>
+
+    <a class="shop-row" href="./shop.html">
+      <div class="logo-slot" data-slot style="width:96px;height:72px;"><span class="slot-label">菜品图</span></div>
+      <div>
+        <div class="shop-name">骨汤麻辣烫 <span class="stamp stamp-done" style="margin-left: 8px;">菜品 · 兰州拉面</span></div>
+        <div class="shop-meta"><span>月售 210</span><span>¥15 / 份</span></div>
+      </div>
+      <span class="go">&gt;</span>
+    </a>
+    <a class="shop-row" href="./shop.html">
+      <div class="logo-slot" data-slot style="width:96px;height:72px;"><span class="slot-label">菜品图</span></div>
+      <div>
+        <div class="shop-name">麻辣拌 <span class="stamp stamp-done" style="margin-left: 8px;">菜品 · 麻辣香锅小灶</span></div>
+        <div class="shop-meta"><span>月售 187</span><span>¥13 / 份</span></div>
+      </div>
+      <span class="go">&gt;</span>
+    </a>
+    <a class="shop-row" href="./shop.html">
+      <div class="logo-slot" data-slot style="width:96px;height:72px;"><span class="slot-label">菜品图</span></div>
+      <div>
+        <div class="shop-name">自选麻辣烫（微辣） <span class="stamp stamp-done" style="margin-left: 8px;">菜品 · 麻辣香锅小灶</span></div>
+        <div class="shop-meta"><span>月售 156</span><span>¥16 / 份</span></div>
+      </div>
+      <span class="go">&gt;</span>
+    </a>
+  </div>
+
+  <div style="margin-top: var(--space-xl); border: 2px dashed var(--color-rule); padding: var(--space-lg); text-align: center; color: var(--color-muted); font-size: var(--text-sm);">
+    空状态示意：未找到相关店铺或菜品时，这里会显示「换个词试试，比如：奶茶、水饺」。
+  </div>
+</main>
+
+<footer class="site-foot">
+  <div class="container site-foot-in">
+    <div>
+      <span class="brand-name">校味</span> <span class="brand-pix">CAMPUS EATS</span>
+      <small>全栈课程设计作品 · 视觉稿 v1</small>
+    </div>
+    <small style="margin-top:0;">主题：像素×温馨</small>
+  </div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>订单看板 · 校味管理后台</title>
+<meta name="description" content="校味管理后台订单看板视觉稿：四列对应订单状态机，行内按钮按状态推进订单。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=ZCOOL+QingKe+HuangYou&family=Noto+Sans+SC:wght@400;500;700&family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./css/site.css">
+</head>
+<body>
+<div class="admin">
+  <aside class="admin-side">
+    <a class="brand" href="./admin-orders.html" style="text-decoration:none;"><span class="brand-name">校味</span><span class="brand-pix">ADMIN</span></a>
+    <a href="./admin-orders.html" aria-current="page">订单管理</a>
+    <a href="./admin-shops.html">店铺管理</a>
+    <a href="./admin-dishes.html">菜品管理</a>
+    <a href="./admin-shops.html">分类管理</a>
+  </aside>
+
+  <main class="admin-main">
+    <div class="admin-top">
+      <h1>订单看板</h1>
+      <div class="admin-user"><span>管理员 admin</span><a href="./login.html">退出</a></div>
+    </div>
+
+    <div class="kanban">
+      <section class="kan-col" aria-label="待接单">
+        <header class="kan-head"><span>待接单</span><span class="kan-count">(2)</span></header>
+        <div class="kan-body">
+          <article class="kan-card">
+            <div class="kc-top"><span>#1001</span><span>茶百道</span></div>
+            <div class="kc-sub"><span>张三</span><span class="price"><span class="yen">¥</span>41</span></div>
+            <button class="btn btn-sm" style="width:100%;">接单</button>
+          </article>
+          <article class="kan-card">
+            <div class="kc-top"><span>#1005</span><span>炸鸡星球</span></div>
+            <div class="kc-sub"><span>王五</span><span class="price"><span class="yen">¥</span>36</span></div>
+            <button class="btn btn-sm" style="width:100%;">接单</button>
+          </article>
+        </div>
+      </section>
+
+      <section class="kan-col" aria-label="配送中">
+        <header class="kan-head"><span>配送中</span><span class="kan-count">(2)</span></header>
+        <div class="kan-body">
+          <article class="kan-card">
+            <div class="kc-top"><span>#1002</span><span>兰州拉面</span></div>
+            <div class="kc-sub"><span>李四</span><span class="price"><span class="yen">¥</span>15</span></div>
+            <button class="btn btn-sm" style="width:100%;">送达</button>
+          </article>
+          <article class="kan-card">
+            <div class="kc-top"><span>#1006</span><span>阿姨水饺</span></div>
+            <div class="kc-sub"><span>赵六</span><span class="price"><span class="yen">¥</span>20</span></div>
+            <button class="btn btn-sm" style="width:100%;">送达</button>
+          </article>
+        </div>
+      </section>
+
+      <section class="kan-col" aria-label="已完成">
+        <header class="kan-head"><span>已完成</span><span class="kan-count">(28)</span></header>
+        <div class="kan-body">
+          <article class="kan-card">
+            <div class="kc-top"><span>#1003</span><span>炸鸡星球</span></div>
+            <div class="kc-sub"><span>王五</span><span class="price"><span class="yen">¥</span>36</span></div>
+            <button class="btn btn-sm btn-ghost" style="width:100%;">详情</button>
+          </article>
+          <article class="kan-card" style="opacity:.7;">
+            <div class="kc-top"><span>#1007</span><span>果哇水果捞</span></div>
+            <div class="kc-sub"><span>张三</span><span class="price"><span class="yen">¥</span>22</span></div>
+            <button class="btn btn-sm btn-ghost" style="width:100%;">详情</button>
+          </article>
+        </div>
+      </section>
+
+      <section class="kan-col" aria-label="已取消">
+        <header class="kan-head"><span>已取消</span><span class="kan-count">(4)</span></header>
+        <div class="kan-body">
+          <article class="kan-card" style="opacity:.7;">
+            <div class="kc-top"><span>#1004</span><span>果哇水果捞</span></div>
+            <div class="kc-sub"><span>张三</span><span class="price"><span class="yen">¥</span>22</span></div>
+            <button class="btn btn-sm btn-ghost" style="width:100%;">详情</button>
+          </article>
+        </div>
+      </section>
+    </div>
+
+    <p style="margin-top: var(--space-lg); font-size: var(--text-xs); color: var(--color-muted);">状态只能按 待接单 → 配送中 → 已完成 顺序推进；待接单可取消。跳序推进会被后端拒绝。</p>
+  </main>
+</div>
+</body>
+</html>

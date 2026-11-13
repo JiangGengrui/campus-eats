@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>地址管理 · 校味</title>
+<meta name="description" content="校味地址管理页视觉稿：收货地址的增删改与默认地址设置，字段含宿舍楼与房间号。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=ZCOOL+QingKe+HuangYou&family=Noto+Sans+SC:wght@400;500;700&family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./css/site.css">
+</head>
+<body>
+<header class="site-head">
+  <div class="container site-head-in">
+    <a class="brand" href="./index.html"><span class="brand-name">校味</span><span class="brand-pix">CAMPUS EATS</span></a>
+    <form class="search" action="./search.html"><input type="search" placeholder="搜索店名或菜名"><button type="submit">搜索</button></form>
+    <nav class="head-nav">
+      <a href="./index.html">首页</a>
+      <a href="./orders.html">我的订单</a>
+      <a href="./address.html" aria-current="page">地址管理</a>
+      <a href="./login.html">退出</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+  <div style="display:flex; justify-content: space-between; align-items: center; padding-top: var(--space-xl);">
+    <h1 style="font-family: var(--font-display); font-size: var(--text-2xl);">收货地址</h1>
+    <button class="btn btn-sm">+ 新增地址</button>
+  </div>
+
+  <div class="addr-grid">
+    <article class="addr-card">
+      <div class="row"><span class="addr-name">张三</span><span class="addr-tel">138****1234</span><span class="tag">默认</span></div>
+      <p style="font-size: var(--text-sm); color: var(--color-ink-2);">1 号宿舍楼 302（楼下货架自取）</p>
+      <div class="row" style="margin-top: var(--space-2xs);">
+        <button class="btn btn-ghost btn-sm">编辑</button>
+        <button class="btn btn-danger btn-sm">删除</button>
+      </div>
+    </article>
+
+    <article class="addr-card">
+      <div class="row"><span class="addr-name">李四</span><span class="addr-tel">139****5678</span></div>
+      <p style="font-size: var(--text-sm); color: var(--color-ink-2);">5 号宿舍楼 108</p>
+      <div class="row" style="margin-top: var(--space-2xs);">
+        <button class="btn btn-ghost btn-sm">设为默认</button>
+        <button class="btn btn-ghost btn-sm">编辑</button>
+        <button class="btn btn-danger btn-sm">删除</button>
+      </div>
+    </article>
+  </div>
+
+  <section class="panel" style="max-width: 560px; margin-block: var(--space-xl);">
+    <h2 class="panel-head">新增 / 编辑地址</h2>
+    <div class="panel-body">
+      <div class="field"><label for="nm">收货人</label><input id="nm" value="张三"></div>
+      <div class="field"><label for="tel">电话</label><input id="tel" value="13800001234" inputmode="numeric"></div>
+      <div class="field"><label for="bld">宿舍楼</label><input id="bld" value="1 号宿舍楼"></div>
+      <div class="field"><label for="room">房间号</label><input id="room" value="302（楼下货架自取）"></div>
+      <label style="display:flex; gap: var(--space-2xs); align-items:center; font-size: var(--text-sm);"><input type="checkbox" checked> 设为默认地址</label>
+      <button class="btn" style="justify-self:start;">保存地址</button>
+    </div>
+  </section>
+</main>
+
+<footer class="site-foot">
+  <div class="container site-foot-in">
+    <div>
+      <span class="brand-name">校味</span> <span class="brand-pix">CAMPUS EATS</span>
+      <small>全栈课程设计作品 · 视觉稿 v1</small>
+    </div>
+    <small style="margin-top:0;">主题：像素×温馨</small>
+  </div>
+</footer>
+</body>
+</html>

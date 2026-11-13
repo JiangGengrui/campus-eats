@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>登录 · 校味</title>
+<meta name="description" content="校味登录注册页视觉稿：用户名密码登录，注册切换与字段级错误提示示意。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=ZCOOL+QingKe+HuangYou&family=Noto+Sans+SC:wght@400;500;700&family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./css/site.css">
+</head>
+<body>
+<header class="site-head">
+  <div class="container site-head-in">
+    <a class="brand" href="./index.html"><span class="brand-name">校味</span><span class="brand-pix">CAMPUS EATS</span></a>
+    <nav class="head-nav">
+      <a href="./index.html">先去逛逛</a>
+    </nav>
+  </div>
+</header>
+
+<div class="auth-wrap">
+  <div class="auth-card">
+    <h2 class="panel-head" style="text-align:center;">登录校味</h2>
+    <div class="panel-body">
+      <div class="field"><label for="user">用户名</label><input id="user" placeholder="学号或昵称" autocomplete="username"></div>
+      <div class="field"><label for="pass">密码</label><input id="pass" type="password" placeholder="至少 6 位" autocomplete="current-password"></div>
+      <p style="font-size: var(--text-xs); color: var(--color-error);">示意：字段级错误会显示在这里，比如「用户名已存在」</p>
+      <button class="btn" style="width:100%;">登录</button>
+      <p class="auth-switch">还没有账号？<a href="./login.html">注册一个</a></p>
+      <p class="auth-switch" style="font-size: var(--text-xs);">管理员请从 <a href="./admin-orders.html">后台入口</a> 登录</p>
+    </div>
+  </div>
+</div>
+
+<footer class="site-foot">
+  <div class="container site-foot-in">
+    <div>
+      <span class="brand-name">校味</span> <span class="brand-pix">CAMPUS EATS</span>
+      <small>全栈课程设计作品 · 视觉稿 v1</small>
+    </div>
+    <small style="margin-top:0;">主题：像素×温馨</small>
+  </div>
+</footer>
+</body>
+</html>

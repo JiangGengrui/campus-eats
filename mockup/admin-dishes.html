@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>菜品管理 · 校味管理后台</title>
+<meta name="description" content="校味管理后台菜品管理视觉稿：按店铺与菜品分类筛选，菜品增删改查、上下架与图片上传。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=ZCOOL+QingKe+HuangYou&family=Noto+Sans+SC:wght@400;500;700&family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./css/site.css">
+</head>
+<body>
+<div class="admin">
+  <aside class="admin-side">
+    <a class="brand" href="./admin-orders.html" style="text-decoration:none;"><span class="brand-name">校味</span><span class="brand-pix">ADMIN</span></a>
+    <a href="./admin-orders.html">订单管理</a>
+    <a href="./admin-shops.html">店铺管理</a>
+    <a href="./admin-dishes.html" aria-current="page">菜品管理</a>
+    <a href="./admin-shops.html">分类管理</a>
+  </aside>
+
+  <main class="admin-main">
+    <div class="admin-top">
+      <h1>菜品管理 · 茶百道</h1>
+      <div class="admin-user"><span>管理员 admin</span><a href="./login.html">退出</a></div>
+    </div>
+
+    <div class="filters">
+      <select aria-label="按店铺筛选"><option>茶百道</option><option>麻辣香锅小灶</option><option>兰州拉面</option></select>
+      <select aria-label="按菜品分类筛选"><option>全部分类</option><option>招牌</option><option>奶茶</option><option>果茶</option></select>
+      <input type="search" placeholder="搜菜名" aria-label="搜菜名">
+      <button class="btn btn-sm" style="margin-left:auto;">+ 新增菜品</button>
+    </div>
+
+    <table class="table">
+      <thead><tr><th>菜品</th><th>分类</th><th>价格</th><th>月销量</th><th>状态</th><th>操作</th></tr></thead>
+      <tbody>
+        <tr>
+          <td style="display:flex; align-items:center; gap: var(--space-sm);"><span class="thumb-slot" data-slot><span class="slot-label">图</span></span><span style="font-weight:700;">招牌杨枝甘露</span></td>
+          <td>招牌</td><td class="num">¥16</td><td class="num">312</td>
+          <td><span class="stamp stamp-done">在售</span></td>
+          <td><div class="ops"><button class="btn btn-ghost btn-sm">编辑</button><button class="btn btn-danger btn-sm">下架</button></div></td>
+        </tr>
+        <tr>
+          <td style="display:flex; align-items:center; gap: var(--space-sm);"><span class="thumb-slot" data-slot><span class="slot-label">图</span></span><span style="font-weight:700;">珍珠奶茶</span></td>
+          <td>奶茶</td><td class="num">¥12</td><td class="num">203</td>
+          <td><span class="stamp stamp-done">在售</span></td>
+          <td><div class="ops"><button class="btn btn-ghost btn-sm">编辑</button><button class="btn btn-danger btn-sm">下架</button></div></td>
+        </tr>
+        <tr>
+          <td style="display:flex; align-items:center; gap: var(--space-sm);"><span class="thumb-slot" data-slot><span class="slot-label">图</span></span><span style="font-weight:700;">芋泥波波奶茶</span></td>
+          <td>奶茶</td><td class="num">¥14</td><td class="num">198</td>
+          <td><span class="stamp stamp-done">在售</span></td>
+          <td><div class="ops"><button class="btn btn-ghost btn-sm">编辑</button><button class="btn btn-danger btn-sm">下架</button></div></td>
+        </tr>
+        <tr>
+          <td style="display:flex; align-items:center; gap: var(--space-sm);"><span class="thumb-slot" data-slot><span class="slot-label">图</span></span><span style="font-weight:700;">冬季限定热红酒风味饮</span></td>
+          <td>果茶</td><td class="num">¥18</td><td class="num">0</td>
+          <td><span class="stamp stamp-cancel">已下架</span></td>
+          <td><div class="ops"><button class="btn btn-ghost btn-sm">编辑</button><button class="btn btn-sm">重新上架</button></div></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <section class="panel" style="max-width: 560px; margin-top: var(--space-xl);">
+      <h2 class="panel-head">新增 / 编辑菜品</h2>
+      <div class="panel-body">
+        <div class="field"><label for="dn">菜名</label><input id="dn" placeholder="比如：招牌杨枝甘露"></div>
+        <div class="field"><label for="dc">菜品分类</label><select id="dc" style="border:2px solid var(--color-ink); padding: var(--space-xs) var(--space-sm);"><option>招牌</option><option>奶茶</option><option>果茶</option><option>小食</option></select></div>
+        <div class="field"><label for="dp">价格</label><input id="dp" value="16" inputmode="decimal"></div>
+        <div class="field"><label for="dimg">菜品图片</label><div class="thumb-slot" data-slot style="width:96px;height:72px;"><span class="slot-label">上传图</span></div></div>
+        <button class="btn" style="justify-self:start;">保存菜品</button>
+      </div>
+    </section>
+  </main>
+</div>
+</body>
+</html>

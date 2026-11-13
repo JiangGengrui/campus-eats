@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>店铺管理 · 校味管理后台</title>
+<meta name="description" content="校味管理后台店铺管理视觉稿：店铺的增删改查与上下架，含分类筛选与编辑表单。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=ZCOOL+QingKe+HuangYou&family=Noto+Sans+SC:wght@400;500;700&family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./css/site.css">
+</head>
+<body>
+<div class="admin">
+  <aside class="admin-side">
+    <a class="brand" href="./admin-orders.html" style="text-decoration:none;"><span class="brand-name">校味</span><span class="brand-pix">ADMIN</span></a>
+    <a href="./admin-orders.html">订单管理</a>
+    <a href="./admin-shops.html" aria-current="page">店铺管理</a>
+    <a href="./admin-dishes.html">菜品管理</a>
+    <a href="./admin-shops.html">分类管理</a>
+  </aside>
+
+  <main class="admin-main">
+    <div class="admin-top">
+      <h1>店铺管理</h1>
+      <div class="admin-user"><span>管理员 admin</span><a href="./login.html">退出</a></div>
+    </div>
+
+    <div class="filters">
+      <select aria-label="分类筛选"><option>全部分类</option><option>奶茶</option><option>快餐</option><option>面食</option></select>
+      <input type="search" placeholder="搜店名" aria-label="搜店名">
+      <button class="btn btn-sm" style="margin-left:auto;">+ 新增店铺</button>
+    </div>
+
+    <table class="table">
+      <thead><tr><th>店铺</th><th>分类</th><th>月销量</th><th>起送价</th><th>评分</th><th>状态</th><th>操作</th></tr></thead>
+      <tbody>
+        <tr>
+          <td style="font-weight:700;">茶百道</td><td>奶茶</td><td class="num">888</td><td class="num">¥10</td><td class="num">4.9</td>
+          <td><span class="stamp stamp-done">营业中</span></td>
+          <td><div class="ops"><button class="btn btn-ghost btn-sm">编辑</button><button class="btn btn-danger btn-sm">下架</button></div></td>
+        </tr>
+        <tr>
+          <td style="font-weight:700;">麻辣香锅小灶</td><td>快餐</td><td class="num">999</td><td class="num">¥15</td><td class="num">4.8</td>
+          <td><span class="stamp stamp-done">营业中</span></td>
+          <td><div class="ops"><button class="btn btn-ghost btn-sm">编辑</button><button class="btn btn-danger btn-sm">下架</button></div></td>
+        </tr>
+        <tr>
+          <td style="font-weight:700;">兰州拉面</td><td>面食</td><td class="num">666</td><td class="num">¥12</td><td class="num">4.7</td>
+          <td><span class="stamp stamp-done">营业中</span></td>
+          <td><div class="ops"><button class="btn btn-ghost btn-sm">编辑</button><button class="btn btn-danger btn-sm">下架</button></div></td>
+        </tr>
+        <tr>
+          <td style="font-weight:700;">深夜烧烤铺</td><td>烧烤</td><td class="num">0</td><td class="num">¥25</td><td class="num">暂无</td>
+          <td><span class="stamp stamp-cancel">已下架</span></td>
+          <td><div class="ops"><button class="btn btn-ghost btn-sm">编辑</button><button class="btn btn-sm">重新上架</button></div></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <section class="panel" style="max-width: 560px; margin-top: var(--space-xl);">
+      <h2 class="panel-head">新增 / 编辑店铺</h2>
+      <div class="panel-body">
+        <div class="field"><label for="sn">店名</label><input id="sn" placeholder="比如：茶百道"></div>
+        <div class="field"><label for="sc">分类</label><select id="sc" style="border:2px solid var(--color-ink); padding: var(--space-xs) var(--space-sm);"><option>奶茶</option><option>快餐</option><option>面食</option></select></div>
+        <div class="field"><label for="sp">起送价</label><input id="sp" value="10" inputmode="decimal"></div>
+        <div class="field"><label for="sd">配送费</label><input id="sd" value="1" inputmode="decimal"></div>
+        <div class="field"><label for="slogo">店铺 logo</label><div class="thumb-slot" data-slot style="width:96px;height:72px;"><span class="slot-label">上传图</span></div></div>
+        <button class="btn" style="justify-self:start;">保存店铺</button>
+      </div>
+    </section>
+
+    <p style="margin-top: var(--space-lg); font-size: var(--text-xs); color: var(--color-muted);">已有历史订单的店铺只能下架（软删除），不能物理删除。分类管理在此页顶部「分类管理」入口，同样为表格 CRUD。</p>
+  </main>
+</div>
+</body>
+</html>

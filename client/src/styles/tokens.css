@@ -1,0 +1,41 @@
+:root {
+  --space-3xs: 2px; --space-2xs: 4px; --space-xs: 8px; --space-sm: 12px; --space-md: 16px; --space-lg: 24px; --space-xl: 40px; --space-2xl: 64px; --space-3xl: 96px; --space-4xl: 144px;
+  --text-xs: 0.8125rem; --text-sm: 0.875rem; --text-md: 1rem; --text-lg: 1.25rem; --text-xl: 1.5625rem; --text-2xl: 1.953rem; --text-3xl: 2.441rem;
+  --text-display-s: clamp(2.25rem, 4vw + 0.5rem, 3.75rem); --text-display: clamp(2.75rem, 5vw + 1rem, 5.25rem);
+  --text-section: clamp(2rem, 2.5vw + 1rem, 3.5rem); --text-title: clamp(1.25rem, 0.75vw + 0.875rem, 1.625rem); --text-lead: clamp(1.125rem, 0.35vw + 1rem, 1.375rem);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1); --ease-in: cubic-bezier(0.7, 0, 0.84, 0); --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-micro: 120ms; --dur-short: 220ms; --dur-long: 420ms;
+  --color-error: oklch(52% 0.19 27); --color-success: oklch(50% 0.12 150);
+  --container: 1280px; --gutter: 64px; --gap-columns: 24px; --section-gap-s: 72px; --section-gap: 96px; --section-gap-l: 120px;
+  --z-base: 1; --z-raised: 10; --z-dropdown: 100; --z-sticky: 200; --z-sticky-nav: 300; --z-modal: 400; --z-toast: 500; --z-tooltip: 600;
+
+  /* 像素×温馨 · 纸面与油墨：奶油暖纸 + 棕黑油墨（暖纸颗粒质感吸收自 DOSE） */
+  --color-paper: oklch(96.2% 0.028 88);
+  --color-paper-2: oklch(98.3% 0.018 92);
+  --color-paper-3: oklch(92.5% 0.042 84);
+  --color-ink: oklch(24% 0.032 55);
+  --color-ink-2: oklch(33% 0.03 58);
+  --color-muted: oklch(50% 0.026 68);
+  --color-rule: oklch(85% 0.026 84);
+
+  /* 信号色：暖橙/番茄红 = 加购、下单等主行动 */
+  --color-accent: oklch(57% 0.19 38);
+  --color-accent-ink: oklch(99.2% 0.01 95);
+  --color-focus: oklch(54% 0.16 258);
+
+  /* 状态色纪律（DOSE 吸收）：一个颜色只说一种业务状态 */
+  --st-paid-bg: oklch(83% 0.09 78);   --st-paid-ink: oklch(38% 0.09 70);    /* 待接单 · 暖橙 */
+  --st-deliv-bg: oklch(86% 0.055 240); --st-deliv-ink: oklch(38% 0.10 245);  /* 配送中 · 蓝 */
+  --st-done-bg: oklch(87% 0.07 152);  --st-done-ink: oklch(35% 0.10 152);   /* 已完成 · 绿 */
+  --st-cancel-bg: oklch(88% 0.008 80); --st-cancel-ink: oklch(45% 0.012 80); /* 已取消 · 灰 */
+
+  /* 字体：标题用站酷庆科黄油体（复古厚重），正文思源黑系，价格数字用像素字 */
+  --font-display: "ZCOOL QingKe HuangYou", "PingFang SC", "Microsoft YaHei", sans-serif;
+  --font-body: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+  --font-outlier: "Silkscreen", "ZCOOL QingKe HuangYou", monospace; /* 像素点缀位：价格/编号 */
+
+  --radius-card: 6px; --radius-pill: 999px; --rule-hair: 1px;
+  --shadow-card: 4px 4px 0 var(--color-ink);          /* 硬偏移阴影：像素基因 */
+  --shadow-card-sm: 3px 3px 0 var(--color-ink);
+  --tracking-display: 0.01em;
+}

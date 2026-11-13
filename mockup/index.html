@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>校味：校园外卖点单平台（首页）</title>
+<meta name="description" content="校味是校内店铺聚合点单平台视觉稿：浏览校内店铺、搜索菜品、加购下单并跟踪订单状态。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=ZCOOL+QingKe+HuangYou&family=Noto+Sans+SC:wght@400;500;700&family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./css/site.css">
+</head>
+<body>
+<header class="site-head">
+  <div class="container site-head-in">
+    <a class="brand" href="./index.html"><span class="brand-name">校味</span><span class="brand-pix">CAMPUS EATS</span></a>
+    <form class="search" action="./search.html"><input type="search" placeholder="搜索店名或菜名，比如：麻辣烫"><button type="submit">搜索</button></form>
+    <nav class="head-nav">
+      <a href="./index.html" aria-current="page">首页</a>
+      <a href="./orders.html">我的订单</a>
+      <a href="./address.html">地址管理</a>
+      <a class="cart-link" href="./shop.html">(cart) 购物车 3</a>
+      <a href="./login.html">退出</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container hero-in">
+    <div>
+      <h1>宿舍楼下，<br>热乎的已经出票。</h1>
+      <p>校内 8 家窗口入驻，从奶茶到拉面，点单像撕一张饭票一样快。</p>
+      <div class="hero-cta">
+        <a class="btn" href="./shop.html">先逛逛店铺</a>
+        <a class="btn btn-ghost" href="./orders.html">看我的订单</a>
+      </div>
+    </div>
+    <div class="hero-ticket" aria-label="点单小票示意">
+      <div class="hero-ticket-head"><span>校味 NO.1024</span><span>2026-11-08 12:03</span></div>
+      <div class="ticket-line"><span>珍珠奶茶 x2</span><span class="price"><span class="yen">¥</span>24</span></div>
+      <div class="ticket-line"><span>招牌杨枝甘露 x1</span><span class="price"><span class="yen">¥</span>16</span></div>
+      <div class="ticket-line"><span>配送费</span><span class="price"><span class="yen">¥</span>1</span></div>
+      <div class="hero-ticket-total"><span>合计</span><span class="price price-big"><span class="yen">¥</span>41</span></div>
+    </div>
+  </div>
+</section>
+
+<main class="container" style="padding-block: var(--space-xl);">
+  <h2 style="font-family: var(--font-display); font-size: var(--text-xl); margin-bottom: var(--space-lg);">今天想吃点什么？</h2>
+  <div class="cat-grid">
+    <a class="cat-tile" href="./search.html"><span class="glyph">茶</span>奶茶</a>
+    <a class="cat-tile" href="./search.html"><span class="glyph">锅</span>快餐</a>
+    <a class="cat-tile" href="./search.html"><span class="glyph">面</span>面食</a>
+    <a class="cat-tile" href="./search.html"><span class="glyph">串</span>烧烤</a>
+    <a class="cat-tile" href="./search.html"><span class="glyph">果</span>甜品</a>
+    <a class="cat-tile" href="./search.html"><span class="glyph">饭</span>简餐</a>
+  </div>
+
+  <h2 style="font-family: var(--font-display); font-size: var(--text-xl); margin: var(--space-2xl) 0 var(--space-lg);">全部店铺</h2>
+  <div class="board">
+    <aside class="board-side" aria-label="店铺分类">
+      <div class="board-side-title">分类</div>
+      <a href="./index.html" aria-current="true">全部</a>
+      <a href="./search.html">奶茶</a>
+      <a href="./search.html">快餐</a>
+      <a href="./search.html">面食</a>
+      <a href="./search.html">烧烤</a>
+      <a href="./search.html">甜品</a>
+    </aside>
+    <div class="shop-list">
+      <a class="shop-row" href="./shop.html">
+        <div class="logo-slot" data-slot style="width:96px;height:72px;"><span class="slot-label">茶百道 logo</span></div>
+        <div><div class="shop-name">茶百道</div><div class="shop-meta"><span>月售 888</span><span>¥10 起送</span><span>配送 ¥1</span><span>4.9 分</span></div></div>
+        <span class="go">&gt;</span>
+      </a>
+      <a class="shop-row" href="./shop.html">
+        <div class="logo-slot" data-slot style="width:96px;height:72px;"><span class="slot-label">麻辣香锅 logo</span></div>
+        <div><div class="shop-name">麻辣香锅小灶</div><div class="shop-meta"><span>月售 999</span><span>¥15 起送</span><span>配送 ¥2</span><span>4.8 分</span></div></div>
+        <span class="go">&gt;</span>
+      </a>
+      <a class="shop-row" href="./shop.html">
+        <div class="logo-slot" data-slot style="width:96px;height:72px;"><span class="slot-label">兰州拉面 logo</span></div>
+        <div><div class="shop-name">兰州拉面</div><div class="shop-meta"><span>月售 666</span><span>¥12 起送</span><span>配送 ¥1</span><span>4.7 分</span></div></div>
+        <span class="go">&gt;</span>
+      </a>
+      <a class="shop-row" href="./shop.html">
+        <div class="logo-slot" data-slot style="width:96px;height:72px;"><span class="slot-label">炸鸡星球 logo</span></div>
+        <div><div class="shop-name">炸鸡星球</div><div class="shop-meta"><span>月售 456</span><span>¥20 起送</span><span>配送 ¥3</span><span>4.6 分</span></div></div>
+        <span class="go">&gt;</span>
+      </a>
+      <a class="shop-row" href="./shop.html">
+        <div class="logo-slot" data-slot style="width:96px;height:72px;"><span class="slot-label">阿姨水饺 logo</span></div>
+        <div><div class="shop-name">阿姨水饺</div><div class="shop-meta"><span>月售 521</span><span>¥8 起送</span><span>配送 ¥1</span><span>4.8 分</span></div></div>
+        <span class="go">&gt;</span>
+      </a>
+      <a class="shop-row" href="./shop.html">
+        <div class="logo-slot" data-slot style="width:96px;height:72px;"><span class="slot-label">果哇水果捞 logo</span></div>
+        <div><div class="shop-name">果哇水果捞</div><div class="shop-meta"><span>月售 388</span><span>¥9 起送</span><span>配送 ¥2</span><span>4.7 分</span></div></div>
+        <span class="go">&gt;</span>
+      </a>
+    </div>
+  </div>
+</main>
+
+<footer class="site-foot">
+  <div class="container site-foot-in">
+    <div>
+      <span class="brand-name">校味</span> <span class="brand-pix">CAMPUS EATS</span>
+      <small>全栈课程设计作品：React + Express + SQLite，演示账号见 SPEC。<br>照片：CEphoto, Uwe Aranas（CC BY-SA 3.0, Wikimedia Commons）</small>
+    </div>
+    <small style="margin-top:0;">视觉稿 v1 · 主题：像素×温馨</small>
+  </div>
+</footer>
+</body>
+</html>

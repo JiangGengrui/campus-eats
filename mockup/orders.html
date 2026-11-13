@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>我的订单 · 校味</title>
+<meta name="description" content="校味我的订单页视觉稿：按待接单、配送中、已完成、已取消筛选订单，卡片内直达取消与详情。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=ZCOOL+QingKe+HuangYou&family=Noto+Sans+SC:wght@400;500;700&family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./css/site.css">
+</head>
+<body>
+<header class="site-head">
+  <div class="container site-head-in">
+    <a class="brand" href="./index.html"><span class="brand-name">校味</span><span class="brand-pix">CAMPUS EATS</span></a>
+    <form class="search" action="./search.html"><input type="search" placeholder="搜索店名或菜名"><button type="submit">搜索</button></form>
+    <nav class="head-nav">
+      <a href="./index.html">首页</a>
+      <a href="./orders.html" aria-current="page">我的订单</a>
+      <a href="./address.html">地址管理</a>
+      <a href="./login.html">退出</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container" style="padding-block: var(--space-xl);">
+  <h1 style="font-family: var(--font-display); font-size: var(--text-2xl); margin-bottom: var(--space-lg);">我的订单</h1>
+
+  <nav class="tabs" aria-label="订单状态筛选">
+    <a class="tab" href="./orders.html" aria-current="page">全部</a>
+    <a class="tab" href="./orders.html">待接单</a>
+    <a class="tab" href="./orders.html">配送中</a>
+    <a class="tab" href="./orders.html">已完成</a>
+    <a class="tab" href="./orders.html">已取消</a>
+  </nav>
+
+  <article class="order-card">
+    <div class="order-card-top">
+      <div><span class="order-shop">茶百道</span> <span class="order-no">#1001</span></div>
+      <span class="stamp stamp-paid">待接单</span>
+    </div>
+    <p class="order-items">珍珠奶茶 x2、招牌杨枝甘露 x1</p>
+    <div class="order-card-foot">
+      <span style="font-size: var(--text-sm);">合计 <span class="price"><span class="yen">¥</span>41</span> · 2026-11-08 12:03</span>
+      <span style="display:flex; gap: var(--space-sm);">
+        <button class="btn btn-sm btn-danger">取消订单</button>
+        <a class="btn btn-sm btn-ghost" href="./order-detail.html">查看详情</a>
+      </span>
+    </div>
+  </article>
+
+  <article class="order-card">
+    <div class="order-card-top">
+      <div><span class="order-shop">兰州拉面</span> <span class="order-no">#1002</span></div>
+      <span class="stamp stamp-deliv">配送中</span>
+    </div>
+    <p class="order-items">骨汤麻辣烫 x1</p>
+    <div class="order-card-foot">
+      <span style="font-size: var(--text-sm);">合计 <span class="price"><span class="yen">¥</span>15</span> · 2026-11-07 18:22</span>
+      <a class="btn btn-sm btn-ghost" href="./order-detail.html">查看详情</a>
+    </div>
+  </article>
+
+  <article class="order-card">
+    <div class="order-card-top">
+      <div><span class="order-shop">炸鸡星球</span> <span class="order-no">#1003</span></div>
+      <span class="stamp stamp-done">已完成</span>
+    </div>
+    <p class="order-items">炸鸡全家福 x1</p>
+    <div class="order-card-foot">
+      <span style="font-size: var(--text-sm);">合计 <span class="price"><span class="yen">¥</span>36</span> · 2026-11-06 19:05</span>
+      <a class="btn btn-sm btn-ghost" href="./order-detail.html">查看详情</a>
+    </div>
+  </article>
+
+  <article class="order-card" style="opacity: 0.75;">
+    <div class="order-card-top">
+      <div><span class="order-shop">果哇水果捞</span> <span class="order-no">#1004</span></div>
+      <span class="stamp stamp-cancel">已取消</span>
+    </div>
+    <p class="order-items">招牌水果捞 x1</p>
+    <div class="order-card-foot">
+      <span style="font-size: var(--text-sm);">合计 <span class="price"><span class="yen">¥</span>22</span> · 2026-11-05 20:41</span>
+      <a class="btn btn-sm btn-ghost" href="./order-detail.html">查看详情</a>
+    </div>
+  </article>
+</main>
+
+<footer class="site-foot">
+  <div class="container site-foot-in">
+    <div>
+      <span class="brand-name">校味</span> <span class="brand-pix">CAMPUS EATS</span>
+      <small>全栈课程设计作品 · 视觉稿 v1</small>
+    </div>
+    <small style="margin-top:0;">主题：像素×温馨</small>
+  </div>
+</footer>
+</body>
+</html>

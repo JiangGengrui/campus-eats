@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>茶百道 · 校味</title>
+<meta name="description" content="校味店铺详情页视觉稿：菜品按分类分组，右侧常驻购物车实时合计，支持加购与数量增减。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=ZCOOL+QingKe+HuangYou&family=Noto+Sans+SC:wght@400;500;700&family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./css/site.css">
+</head>
+<body>
+<header class="site-head">
+  <div class="container site-head-in">
+    <a class="brand" href="./index.html"><span class="brand-name">校味</span><span class="brand-pix">CAMPUS EATS</span></a>
+    <form class="search" action="./search.html"><input type="search" placeholder="搜索店名或菜名"><button type="submit">搜索</button></form>
+    <nav class="head-nav">
+      <a href="./index.html">首页</a>
+      <a href="./orders.html">我的订单</a>
+      <a href="./address.html">地址管理</a>
+      <a class="cart-link" href="./checkout.html">(cart) 购物车 3</a>
+      <a href="./login.html">退出</a>
+    </nav>
+  </div>
+</header>
+
+<section class="shop-banner">
+  <div class="container shop-banner-in">
+    <div class="banner-slot" data-slot style="height:168px;">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/eb/Taipei_Taiwan_Jiaozi-Restaurant-14th-avenue-01.jpg/960px-Taipei_Taiwan_Jiaozi-Restaurant-14th-avenue-01.jpg" alt="茶百道 店铺头图占位">
+      <span class="slot-label" data-keep>店铺头图（后台上传）</span>
+    </div>
+    <div>
+      <h1 class="shop-title">茶百道</h1>
+      <div class="shop-sub"><span>月售 888</span><span>起送 ¥10</span><span>配送 ¥1</span><span>预计 30 分钟</span><span>4.9 分（暂无评价，阶段二开放）</span></div>
+    </div>
+  </div>
+</section>
+
+<main class="container menu-wrap">
+  <nav class="menu-nav" aria-label="菜品分类">
+    <a href="#signature" aria-current="true">招牌</a>
+    <a href="#milktea">奶茶</a>
+    <a href="#fruit">果茶</a>
+    <a href="#snack">小食</a>
+  </nav>
+
+  <div>
+    <h2 class="dish-group-title" id="signature">招牌</h2>
+    <div class="dish-row">
+      <div class="dish-slot" data-slot><span class="slot-label">菜品图</span></div>
+      <div><div class="dish-name">招牌杨枝甘露</div><div class="dish-meta">月售 312</div></div>
+      <div class="dish-buy"><span class="price"><span class="yen">¥</span>16</span><div class="stepper"><button aria-label="减一">−</button><span class="qty">1</span><button aria-label="加一">+</button></div></div>
+    </div>
+    <div class="dish-row">
+      <div class="dish-slot" data-slot><span class="slot-label">菜品图</span></div>
+      <div><div class="dish-name">珍珠奶茶</div><div class="dish-meta">月售 203</div></div>
+      <div class="dish-buy"><span class="price"><span class="yen">¥</span>12</span><div class="stepper"><button aria-label="减一">−</button><span class="qty">2</span><button aria-label="加一">+</button></div></div>
+    </div>
+
+    <h2 class="dish-group-title" id="milktea" style="margin-top: var(--space-xl);">奶茶</h2>
+    <div class="dish-row">
+      <div class="dish-slot" data-slot><span class="slot-label">菜品图</span></div>
+      <div><div class="dish-name">芋泥波波奶茶</div><div class="dish-meta">月售 198</div></div>
+      <div class="dish-buy"><span class="price"><span class="yen">¥</span>14</span><button class="add-one" aria-label="加入购物车">+</button></div>
+    </div>
+    <div class="dish-row">
+      <div class="dish-slot" data-slot><span class="slot-label">菜品图</span></div>
+      <div><div class="dish-name">豆乳玉麒麟</div><div class="dish-meta">月售 121</div></div>
+      <div class="dish-buy"><span class="price"><span class="yen">¥</span>13</span><button class="add-one" aria-label="加入购物车">+</button></div>
+    </div>
+
+    <h2 class="dish-group-title" id="fruit" style="margin-top: var(--space-xl);">果茶</h2>
+    <div class="dish-row">
+      <div class="dish-slot" data-slot><span class="slot-label">菜品图</span></div>
+      <div><div class="dish-name">满杯百香果</div><div class="dish-meta">月售 156</div></div>
+      <div class="dish-buy"><span class="price"><span class="yen">¥</span>13</span><button class="add-one" aria-label="加入购物车">+</button></div>
+    </div>
+    <div class="dish-row">
+      <div class="dish-slot" data-slot><span class="slot-label">菜品图</span></div>
+      <div><div class="dish-name">草莓牛奶麻薯</div><div class="dish-meta">月售 98</div></div>
+      <div class="dish-buy"><span class="price"><span class="yen">¥</span>15</span><button class="add-one" aria-label="加入购物车">+</button></div>
+    </div>
+  </div>
+
+  <aside class="cart-panel" aria-label="购物车">
+    <div class="cart-panel-head"><span>购物车</span><button class="btn-ghost btn btn-sm" style="box-shadow:none;border:1.5px solid var(--color-rule);">清空</button></div>
+    <div class="cart-panel-body">
+      <div class="cart-line"><span>招牌杨枝甘露 x1</span><span class="price"><span class="yen">¥</span>16</span></div>
+      <div class="cart-line"><span>珍珠奶茶 x2</span><span class="price"><span class="yen">¥</span>24</span></div>
+      <div class="cart-line" style="color: var(--color-muted);"><span>配送费</span><span class="price"><span class="yen">¥</span>1</span></div>
+    </div>
+    <div class="cart-panel-foot">
+      <div class="summary-line summary-total"><span>合计</span><span class="price price-big"><span class="yen">¥</span>41</span></div>
+      <a class="btn" href="./checkout.html">去结算</a>
+      <p style="font-size: var(--text-xs); color: var(--color-muted); text-align: center;">加入其他店铺菜品会先清空本购物车</p>
+    </div>
+  </aside>
+</main>
+
+<footer class="site-foot">
+  <div class="container site-foot-in">
+    <div>
+      <span class="brand-name">校味</span> <span class="brand-pix">CAMPUS EATS</span>
+      <small>全栈课程设计作品，视觉稿 v1。照片：CEphoto, Uwe Aranas（CC BY-SA 3.0, Wikimedia Commons）</small>
+    </div>
+    <small style="margin-top:0;">主题：像素×温馨</small>
+  </div>
+</footer>
+</body>
+</html>
