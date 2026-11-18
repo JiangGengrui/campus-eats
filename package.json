@@ -6,9 +6,9 @@
   "description": "校味 CAMPUS EATS · 校园外卖平台（课程设计）",
   "repository": {
     "type": "git",
-    "url": "https://github.com/dickenslian/takeaway.git"
+    "url": "https://github.com/JiangGengrui/campus-eats.git"
   },
-  "homepage": "https://github.com/dickenslian/takeaway#readme",
+  "homepage": "https://github.com/JiangGengrui/campus-eats#readme",
   "workspaces": [
     "shared",
     "server",
